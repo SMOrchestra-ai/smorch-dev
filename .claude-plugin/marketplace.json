@@ -1,0 +1,23 @@
+{
+  "name": "smorch-dev",
+  "owner": {
+    "name": "SMOrchestra.ai",
+    "url": "https://smorchestra.ai"
+  },
+  "metadata": {
+    "description": "SMOrchestra internal dev + ops toolkit for Claude Code. Two plugins: smorch-dev (workflow: plan → code → score → handover → ship) + smorch-ops (infra: deploy / rollback / drift / health / incident / secrets).",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "smorch-dev",
+      "source": "./plugins/smorch-dev",
+      "description": "Workflow plugin. 10 slash commands (/smo-plan, /smo-code, /smo-score, /smo-bridge-gaps, /smo-handover, /smo-qa-handover-score, /smo-qa-run, /smo-ship, /smo-triage, /smo-retro) + 9 skills (smo-scorer with 5-hat rubric, lessons-manager, elegance-pause, arabic-rtl-checker, mena-mobile-check, brd-traceability, handover-generator, qa-handover-scorer, cost-tracker). Install on dev + QA machines."
+    },
+    {
+      "name": "smorch-ops",
+      "source": "./plugins/smorch-ops",
+      "description": "Infrastructure plugin. 7 slash commands (/smo-deploy, /smo-rollback, /smo-drift, /smo-health, /smo-incident, /smo-secrets, /smo-skill-sync) + 7 skills (security-hardener, incident-runbook, deploy-pipeline, rollback-runbook, drift-detector, secrets-manager, codex-doctrine). Install on all machines including servers."
+    }
+  ]
+}

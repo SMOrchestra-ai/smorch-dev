@@ -1,0 +1,39 @@
+category,name,path,description,audience,status
+guide,Starting a new project,CodingProjects/smorch-dev/docs/GUIDE-NEW-PROJECT.md,"8-step scaffold from empty folder to first /smo-plan (~15 min). Repo creation, .smorch overlay, BRD, first feature.",all dev,active
+guide,Working on an existing repo,CodingProjects/smorch-dev/docs/GUIDE-EXISTING-REPO.md,"Daily workflow + role flows (Mamoun/Lana/new hire) + emergency hotfix path.",all dev,active
+guide,QA workflow,CodingProjects/smorch-dev/docs/GUIDE-QA-LANA.md,"Direct QA guide for Lana: 5-dim handover scorecard, Linear integration, timeboxing, escalation ladder.",Lana + future QA,active
+guide,YouTube 10-Steps — Ultimate Claude Code,CodingProjects/smorch-dev/docs/YOUTUBE-10-STEPS-ULTIMATE-CLAUDE-CODE.md,"Step-by-step outline for a YouTube video on setting up Claude Code from scratch. Script + slide prompts.",content creation,active
+guide,GitHub Actions setup,CodingProjects/smorch-dev/docs/GITHUB-ACTIONS-SETUP.md,"One-time: add 3 GitHub secrets + wire sync-to-machines workflow.",Mamoun ops,active
+guide,Plugin/Skills/Commands coding guide,CodingProjects/smorch-dev/docs/PLUGIN-SKILLS-COMMANDS-GUIDE.md,"Single consolidated reference: what each plugin owns, what each skill does, when to call each command.",all dev,active
+guide,Documentation index,CodingProjects/smorch-dev/docs/INDEX.md,"This file — map of all guides, SOPs, artifacts produced during rollout.",all,active
+sop,SOP-14 Plugin Workflow,CodingProjects/SOPs/sops/SOP-14-Plugin-Workflow.md,"NEW. Command surface (17 commands) + verb boundaries (ship vs deploy, triage vs incident).",all dev,active
+sop,SOP-15 Cross-Machine Sync,CodingProjects/SOPs/sops/SOP-15-Cross-Machine-Sync.md,"NEW. Three-tier sync model: GitHub webhook + 30-min cron + drift detection.",ops,active
+sop,SOP-16 Secrets Rotation,CodingProjects/SOPs/sops/SOP-16-Secrets-Rotation.md,"NEW. 90-day rotation SLA across 4 servers. Per-secret-type procedures.",Mamoun,active
+sop,SOP-17 Hire Onboarding Engineering,CodingProjects/SOPs/sops/SOP-17-Hire-Onboarding-Engineering.md,"NEW. Day 1 setup → Week 1 ramp → Month 1 success criteria.",hiring,active
+sop,SOP-01 QA Protocol,CodingProjects/SOPs/sops/SOP-01-QA-Protocol.md,"UPDATED. Pre-QA handover score gate added. Uses /smo-qa-handover-score.",Lana,active
+sop,SOP-02 Pre-Upload Scoring,CodingProjects/SOPs/sops/SOP-02-Pre-Upload-Scoring.md,"UPDATED. Internal ship gate raised 90 → 92. Hat floor 8 → 8.5.",all dev,active
+sop,SOP-09 Skill Injection Registry,CodingProjects/SOPs/sops/SOP-09-Skill-Injection-Registry.md,"UPDATED. smorch-dev + smorch-ops registered. Old plugins marked archived/renamed.",all agents,active
+sop,SOP-13 Lana Handover Protocol,CodingProjects/SOPs/sops/SOP-13-Lana-Handover-Protocol.md,"UPDATED. 4th deliverable added: Lana scores every handover before starting QA.",Lana,active
+sop,DevOps Manual §11,CodingProjects/SOPs/SMOrchestra-DevOps-Operations-Manual.md,"UPDATED §11. Plugin architecture rewritten: 2-tier skills, canonical manifests, 4-point validation.",ops,active
+plugin,smorch-dev,CodingProjects/smorch-dev/plugins/smorch-dev/,"Workflow plugin. 10 commands (plan/code/score/bridge-gaps/handover/qa-handover-score/qa-run/ship/triage/retro). 9 skills (smo-scorer, lessons-manager, elegance-pause, arabic-rtl-checker, mena-mobile-check, brd-traceability, handover-generator, qa-handover-scorer, cost-tracker).",eng-desktop + qa-machine,v1.0.0 active
+plugin,smorch-ops,CodingProjects/smorch-dev/plugins/smorch-ops/,"Infra plugin. 7 commands (deploy/rollback/drift/health/incident/secrets/skill-sync). 7 skills (security-hardener, incident-runbook, deploy-pipeline, rollback-runbook, drift-detector, secrets-manager, codex-doctrine).",all machines incl. servers,v1.0.0 active
+plugin,eo-microsaas-dev,CodingProjects/EO-Students/eo-microsaas-dev/,"Student-facing fork of smorch-dev. 8 commands + 9 skills. 90+ ship gate (vs 92 internal).",EO students,v1.0.0 active
+script,Install — eng-desktop,CodingProjects/smorch-dev/install/eng-desktop.sh,"Mamoun Mac + future hires (Mac/Linux). Installs full toolkit + cron sync.",Mamoun,active
+script,Install — qa-machine,CodingProjects/smorch-dev/install/qa-machine.ps1,"Lana Windows (PowerShell). winget + Task Scheduler for 30-min sync.",Lana,active
+script,Install — dev-server,CodingProjects/smorch-dev/install/dev-server.sh,"smo-dev + smo-eo-qa. Ops-only (no IDE plugins).",ops,active
+script,Install — prod-server,CodingProjects/smorch-dev/install/prod-server.sh,"eo-prod + smo-prod. Ops + security-hardener baseline applied.",ops,active
+script,validate-plugins.sh,CodingProjects/smorch-dev/scripts/validate-plugins.sh,"Schema-checks both plugin.json files. Runs in CI via .github/workflows/validate.yml.",CI,active
+script,sync-from-github.sh,CodingProjects/smorch-dev/scripts/sync-from-github.sh,"Cron-invoked (30 min): pull + install + validate. Telegram alert on failure.",all machines,active
+script,grep-audit-rename.sh,CodingProjects/smorch-dev/scripts/grep-audit-rename.sh,"One-shot: grep literal 'smorch-dev' across all configs before rename. Safety net.",one-time,active
+workflow,validate.yml,CodingProjects/smorch-dev/.github/workflows/validate.yml,"GitHub Actions: runs validate-plugins.sh on every PR + push.",CI,active
+workflow,sync-to-machines.yml,CodingProjects/smorch-dev/.github/workflows/sync-to-machines.yml,"GitHub Actions: on push, SSH to all 4 servers via Tailscale + trigger sync-from-github.sh. <60s target.",CI,active
+config,Global CLAUDE.md,~/.claude/CLAUDE.md,"Trimmed 251 → 116 lines. Boris-discipline. References SOP-14/15/16/17.",global,active
+config,EO-MENA CLAUDE.md,CodingProjects/EO-MENA/CLAUDE.md,"Plugin overlay header added. References the command chain + MENA auto-checks.",project,active
+config,EO-MENA .smorch overlay,CodingProjects/EO-MENA/.smorch/project.json,"Project config consumed by plugin at SessionStart. MENA flag, deploy target, scoring overrides.",project,active
+config,SSE CLAUDE.md,CodingProjects/Signal-Sales-Engine/CLAUDE.md,"Plugin overlay header added. Thesis-alignment override note.",project,active
+config,SSE .smorch overlay,CodingProjects/Signal-Sales-Engine/.smorch/project.json,"Project config — staging + production deploy targets + cost tracking thresholds.",project,active
+planning,Plugin architecture plan,~/.claude/plans/expressive-sparking-cascade.md,"Approved 7-phase rollout plan. Historical record of decisions + ADRs.",historical,active
+planning,Framework analysis BRD,CodingProjects/smorch-dev/plugins/smorch-dev/architecture/brd.md,"Analysis document that produced the 7-pillar workflow (Boris + gstack + superpowers + EO additions).",historical,active
+planning,Pilot week ranking plan,CodingProjects/EO-Students/docs/PILOT-WEEK-RANKING-PLAN.md,"How each hat reaches 10/10 post-rollout. Evidence required per hat.",pilot guidance,active
+planning,Cowork — OS revamp,CodingProjects/EO-Students/docs/COWORK-REVAMP-EO-MICROSAAS-OS.md,"For cowork team: 4 gaps to fix in 4-eo-tech-architect + 4-eo-code-handover skills.",cowork,open
+planning,Cowork — slides revamp,CodingProjects/EO-Students/docs/COWORK-REVAMP-CLAUDE-CODE-SLIDES.md,"For cowork team: slide-by-slide matrix for EO-05-ClaudeCode deck revamp.",cowork,open
