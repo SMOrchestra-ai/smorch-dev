@@ -13,14 +13,22 @@ log() { echo "  [install-plugins] $1"; }
 
 mkdir -p "$CLAUDE_PLUGINS_DIR"
 
-install_plugin_from_repo() {
+install_plugin_via_marketplace() {
   local NAME="$1"
-  local SRC="$SRC_REPO/plugins/$NAME"
-  local DST="$CLAUDE_PLUGINS_DIR/$NAME"
-  [ -d "$SRC" ] || { echo "  ✗ plugin source missing: $SRC"; exit 1; }
-  rm -rf "$DST"
-  cp -R "$SRC" "$DST"
-  log "installed: $NAME → $DST"
+  # Uses Claude Code's marketplace CLI — the proper registration path.
+  # Marketplace was added once via: claude plugin marketplace add SMOrchestra-ai/smorch-dev
+  claude plugin install "$NAME@smorch-dev" 2>&1 | tail -1
+  log "installed: $NAME via marketplace"
+}
+
+ensure_marketplace_added() {
+  if ! claude plugin marketplace list 2>/dev/null | grep -q "^smorch-dev"; then
+    log "adding smorch-dev marketplace (one-time)"
+    claude plugin marketplace add SMOrchestra-ai/smorch-dev 2>&1 | tail -1
+  else
+    log "marketplace already added — refreshing"
+    claude plugin marketplace update smorch-dev 2>&1 | tail -1
+  fi
 }
 
 install_upstream_plugin() {
@@ -36,15 +44,17 @@ install_upstream_plugin() {
   fi
 }
 
+ensure_marketplace_added
+
 case "$PROFILE" in
   eng-desktop|qa-machine)
-    install_plugin_from_repo "smorch-dev"
-    install_plugin_from_repo "smorch-ops"
+    install_plugin_via_marketplace "smorch-dev"
+    install_plugin_via_marketplace "smorch-ops"
     install_upstream_plugin  "gstack" "https://github.com/garrytan/gstack.git"
     install_upstream_plugin  "superpowers" "https://github.com/obra/superpowers.git"
     ;;
   dev-server|prod-server)
-    install_plugin_from_repo "smorch-ops"
+    install_plugin_via_marketplace "smorch-ops"
     # no gstack/superpowers/smorch-dev on servers — ops-only surface
     ;;
   *)
