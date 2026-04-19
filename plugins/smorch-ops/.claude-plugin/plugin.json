@@ -1,7 +1,7 @@
 {
   "name": "smorch-ops",
   "version": "1.0.0",
-  "description": "SMOrchestra infrastructure + deploy plugin. 7 commands (deploy, rollback, drift, health, incident, secrets, skill-sync) + 7 skills (security-hardener, incident-runbook, deploy-pipeline, rollback-runbook, drift-detector, secrets-manager, codex-doctrine). Runs on all machines including servers. Post-perfctl hardened.",
+  "description": "SMOrchestra infrastructure + deploy plugin. 7 slash commands (deploy, rollback, drift, health, incident, secrets, skill-sync) + 7 skills (security-hardener, incident-runbook, deploy-pipeline, rollback-runbook, drift-detector, secrets-manager, codex-doctrine). Runs on all machines including servers. Post-perfctl hardened.",
   "author": {
     "name": "SMOrchestra.ai",
     "email": "smorchestra.ai@gmail.com"
@@ -17,23 +17,5 @@
     "incident-response",
     "drift-detection",
     "secrets-rotation"
-  ],
-  "commands": [
-    "commands/smo-deploy.md",
-    "commands/smo-rollback.md",
-    "commands/smo-drift.md",
-    "commands/smo-health.md",
-    "commands/smo-incident.md",
-    "commands/smo-secrets.md",
-    "commands/smo-skill-sync.md"
-  ],
-  "skills": [
-    "skills/security-hardener",
-    "skills/incident-runbook",
-    "skills/deploy-pipeline",
-    "skills/rollback-runbook",
-    "skills/drift-detector",
-    "skills/secrets-manager",
-    "skills/codex-doctrine"
   ]
 }
