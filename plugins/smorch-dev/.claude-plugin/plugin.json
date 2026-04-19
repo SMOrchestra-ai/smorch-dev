@@ -1,0 +1,45 @@
+{
+  "name": "smorch-dev",
+  "version": "1.0.0",
+  "description": "SMOrchestra internal development workflow plugin. 10 commands (plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro) + 8 skills. 5-hat scoring with internal calibration (92+ ship gate). MENA checks, BRD traceability, elegance pause, lessons.md self-improvement, QA handover scoring, cost tracking. For dev + QA machines (Mamoun + Lana + future hires).",
+  "author": {
+    "name": "SMOrchestra.ai",
+    "email": "smorchestra.ai@gmail.com"
+  },
+  "homepage": "https://github.com/SMOrchestra-ai/smorch-dev",
+  "repository": "https://github.com/SMOrchestra-ai/smorch-dev",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "smorchestra",
+    "internal",
+    "5-hat-scoring",
+    "mena",
+    "tdd",
+    "handover-scoring",
+    "self-improvement"
+  ],
+  "commands": [
+    "commands/smo-plan.md",
+    "commands/smo-code.md",
+    "commands/smo-score.md",
+    "commands/smo-bridge-gaps.md",
+    "commands/smo-handover.md",
+    "commands/smo-qa-handover-score.md",
+    "commands/smo-qa-run.md",
+    "commands/smo-ship.md",
+    "commands/smo-triage.md",
+    "commands/smo-retro.md"
+  ],
+  "skills": [
+    "skills/smo-scorer",
+    "skills/lessons-manager",
+    "skills/elegance-pause",
+    "skills/arabic-rtl-checker",
+    "skills/mena-mobile-check",
+    "skills/brd-traceability",
+    "skills/handover-generator",
+    "skills/qa-handover-scorer",
+    "skills/cost-tracker"
+  ]
+}
