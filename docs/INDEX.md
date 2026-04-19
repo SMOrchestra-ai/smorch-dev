@@ -25,6 +25,7 @@ Last updated: 2026-04-19 after Phase 7 (migration day).
 | **Working on an existing repo** | `smorch-dev/docs/GUIDE-EXISTING-REPO.md` | Daily workflow + role flows (Mamoun / Lana / new hire), emergency hotfix path |
 | **QA workflow (Lana)** | `smorch-dev/docs/GUIDE-QA-LANA.md` | Direct format: 5-dim handover scorecard, Linear integration, timeboxing, escalation ladder |
 | **YouTube — 10 Steps** | `smorch-dev/docs/YOUTUBE-10-STEPS-ULTIMATE-CLAUDE-CODE.md` | Step-by-step script outline for a "set up Claude Code from scratch" video |
+| **YouTube — 2-File Framework** | `smorch-dev/docs/YOUTUBE-BORIS-2-FILE-FRAMEWORK-BRD-CLAUDEMD.md` | Companion video — zooms into the 2 files that matter most: CLAUDE.md (Boris discipline) + BRD (AC-N.N tagging contract) |
 | **GitHub Actions setup** | `smorch-dev/docs/GITHUB-ACTIONS-SETUP.md` | One-time: add 3 secrets, wire sync-to-machines workflow |
 | **Coding toolkit overview** | `smorch-dev/docs/PLUGIN-SKILLS-COMMANDS-GUIDE.md` | Single reference: what each plugin owns, what each skill does, when to call each command |
 
