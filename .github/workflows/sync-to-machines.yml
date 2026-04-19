@@ -1,0 +1,75 @@
+name: Sync to Machines
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # manual trigger
+    inputs:
+      target:
+        description: "Which machine? (leave empty for all)"
+        required: false
+        default: ""
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # one server down shouldn't block others
+      matrix:
+        server:
+          - { name: "eo-prod", host: "100.89.148.62", profile: "prod-server" }
+          - { name: "smo-dev", host: "100.83.242.99", profile: "dev-server" }
+          - { name: "smo-prod", host: "100.108.44.127", profile: "prod-server" }
+          - { name: "smo-eo-qa", host: "100.99.145.22", profile: "dev-server" }
+    steps:
+      - name: Filter matrix by target input
+        if: github.event_name == 'workflow_dispatch' && inputs.target != '' && inputs.target != matrix.server.name
+        run: |
+          echo "Skipping ${{ matrix.server.name }} (target=${{ inputs.target }})"
+          exit 0
+
+      - name: Check runner needs Tailscale (Tailscale access required for Tailscale IPs)
+        run: |
+          echo "NOTE: GitHub-hosted runners can't reach Tailscale IPs directly."
+          echo "This workflow expects either:"
+          echo "  (a) Self-hosted runner on SMOrchestra tailnet, OR"
+          echo "  (b) Public IPs in matrix (replace Tailscale IPs with public), OR"
+          echo "  (c) tailscale/github-action@v2 step to join tailnet"
+
+      - name: Join Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SMO_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t ed25519 -H ${{ matrix.server.host }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Sync smorch-dev on ${{ matrix.server.name }}
+        env:
+          HOST: ${{ matrix.server.host }}
+          NAME: ${{ matrix.server.name }}
+        run: |
+          ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 root@$HOST \
+            "cd /root/smorch-dev && git fetch --quiet origin main && \
+             git pull --quiet --ff-only origin main && \
+             bash scripts/sync-from-github.sh"
+
+      - name: Notify Telegram on failure
+        if: failure()
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: "311453473"
+          NAME: ${{ matrix.server.name }}
+          SHA: ${{ github.sha }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+            -d "chat_id=$CHAT_ID" \
+            -d "text=⚠️ smorch-dev sync FAILED on $NAME (commit ${SHA:0:7}). Run /smo-drift to diagnose."
