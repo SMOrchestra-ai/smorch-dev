@@ -60,15 +60,20 @@ if (-not (Test-Path $RepoDir)) {
     Push-Location $RepoDir; git pull --quiet origin main; Pop-Location
 }
 
-# Install plugins (manual copy — PowerShell equivalent of install-plugins.sh)
-Write-Host "`n→ Installing Claude Code plugins…"
-New-Item -ItemType Directory -Path $ClaudePluginsDir -Force | Out-Null
+# Install plugins via Claude Code marketplace (proper registration path)
+Write-Host "`n→ Registering smorch-dev marketplace + installing plugins…"
+
+# Add marketplace (one-time, idempotent)
+$marketplaceList = claude plugin marketplace list 2>$null
+if ($marketplaceList -notmatch "smorch-dev") {
+    claude plugin marketplace add SMOrchestra-ai/smorch-dev
+} else {
+    claude plugin marketplace update smorch-dev | Out-Null
+    Write-Host "  marketplace smorch-dev already registered — refreshed"
+}
 
 foreach ($plugin in @("smorch-dev", "smorch-ops")) {
-    $src = "$RepoDir\plugins\$plugin"
-    $dst = "$ClaudePluginsDir\$plugin"
-    if (Test-Path $dst) { Remove-Item -Recurse -Force $dst }
-    Copy-Item -Recurse $src $dst
+    claude plugin install "$plugin@smorch-dev" 2>&1 | Select-Object -Last 1
     Write-Host "  installed: $plugin"
 }
 
@@ -118,8 +123,9 @@ Write-Host "══════════════════════�
 Write-Host "  Node:              $(node --version 2>$null)"
 Write-Host "  Claude Code:       $(claude --version 2>$null)"
 Write-Host "  gh:                $(gh --version 2>$null | Select-Object -First 1)"
-Write-Host "  smorch-dev plugin: $(if (Test-Path "$ClaudePluginsDir\smorch-dev") {'✓'} else {'✗'})"
-Write-Host "  smorch-ops plugin: $(if (Test-Path "$ClaudePluginsDir\smorch-ops") {'✓'} else {'✗'})"
+$installed = claude plugin list 2>$null
+Write-Host "  smorch-dev plugin: $(if ($installed -match 'smorch-dev@smorch-dev') {'✓'} else {'✗'})"
+Write-Host "  smorch-ops plugin: $(if ($installed -match 'smorch-ops@smorch-dev') {'✓'} else {'✗'})"
 Write-Host "  gstack:            $(if (Test-Path "$ClaudeSkillsDir\gstack") {'✓'} else {'✗'})"
 Write-Host "  superpowers:       $(if (Test-Path "$ClaudeSkillsDir\superpowers") {'✓'} else {'✗'})"
 Write-Host "  smorch-brain:      $(if (Test-Path $BrainDir) {'✓'} else {'✗'})"
