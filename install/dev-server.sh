@@ -26,6 +26,9 @@ bash install/shared/install-base.sh
 # Plugins (smorch-ops only)
 bash install/shared/install-plugins.sh "$PROFILE"
 
+# Patch ~/.claude/CLAUDE.md + lessons.md with L-009 push-discipline rule
+bash install/shared/patch-claude-md.sh
+
 # Cron sync
 bash install/shared/install-cron-sync.sh "$REPO_DIR"
 

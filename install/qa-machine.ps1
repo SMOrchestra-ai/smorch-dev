@@ -77,6 +77,56 @@ foreach ($plugin in @("smorch-dev", "smorch-ops")) {
     Write-Host "  installed: $plugin"
 }
 
+# Patch ~/.claude/CLAUDE.md + lessons.md with L-009 push-discipline rule
+Write-Host "`n→ Patching ~/.claude/CLAUDE.md + lessons.md with L-009…"
+$ClaudeDir = "$HOME\.claude"
+$ClaudeMd = "$ClaudeDir\CLAUDE.md"
+$LessonsMd = "$ClaudeDir\lessons.md"
+$SentinelClaude = "<!-- L-009-PUSH-DISCIPLINE -->"
+$SentinelLessons = "### L-009 — GitHub is the single point of truth"
+
+New-Item -ItemType Directory -Path $ClaudeDir -Force | Out-Null
+
+$L009Claude = @'
+
+<!-- L-009-PUSH-DISCIPLINE -->
+- Push discipline (L-009): GitHub remote is the single authoritative source of truth. Claude acts as lead architect — at the end of every work unit, commit + push + open PR + merge + tag + update any version references downstream scripts read. Do NOT ask "want me to open the PR?" — do it. Only escalate to CEO when: (a) force push / hard reset / branch delete, (b) deploys to smo-prod or eo-prod, (c) cross-repo edits that affect someone else's in-flight work, (d) anything touching customer data or secrets. Everything else: act. If blocked by approval, flag drift risk every turn until resolved — never carry silent drift.
+'@
+
+$L009Lessons = @'
+
+### L-009 — GitHub is the single point of truth. Always commit AND push. No excuses.
+- **Captured:** 2026-04-21
+- **Trigger:** Shipped a full v1.1.0 upgrade to a plugin but left every change uncommitted — local worktree held the work, GitHub remote was stale. Other machines, cron syncs, install.sh flows never saw it. GitHub drift pattern.
+- **Rule:** GitHub remote is the single authoritative source of truth for every SMOrchestra repo. A change that exists only in a local worktree is invisible work.
+  - **Default behavior:** at end of every work unit → commit + push + open PR + merge + tag + bump downstream version refs. No "shall I push?" prompts.
+  - **Claude acts as CPO / lead architect,** not subordinate. Only escalate to CEO for: (a) force push / hard reset / branch delete, (b) deploys to smo-prod or eo-prod, (c) cross-repo edits affecting someone else's in-flight work, (d) customer data or secrets.
+  - **When approval needed:** flag drift risk every turn until resolved.
+  - **WIP checkpoints:** push mid-stream on feature branches for multi-hour work.
+- **Check:** every turn ending a work unit → mental `git status`. If dirty → commit + push same turn, or flag drift.
+- **Last triggered:** 2026-04-21
+'@
+
+if (-not (Test-Path $ClaudeMd)) {
+    "GLOBAL INSTRUCTIONS — SMOrchestra.ai`n`n## GIT + DEPLOYMENT" | Set-Content -Path $ClaudeMd -Encoding UTF8
+}
+if (-not (Select-String -Path $ClaudeMd -Pattern ([regex]::Escape($SentinelClaude)) -Quiet -ErrorAction SilentlyContinue)) {
+    Add-Content -Path $ClaudeMd -Value $L009Claude -Encoding UTF8
+    Write-Host "  appended L-009 to CLAUDE.md"
+} else {
+    Write-Host "  L-009 already present in CLAUDE.md — skipped"
+}
+
+if (-not (Test-Path $LessonsMd)) {
+    "# Global Lessons — ~/.claude/lessons.md`n**Auto-loaded at SessionStart.**`n`n## Active lessons`n" | Set-Content -Path $LessonsMd -Encoding UTF8
+}
+if (-not (Select-String -Path $LessonsMd -Pattern ([regex]::Escape($SentinelLessons)) -Quiet -ErrorAction SilentlyContinue)) {
+    Add-Content -Path $LessonsMd -Value $L009Lessons -Encoding UTF8
+    Write-Host "  appended L-009 to lessons.md"
+} else {
+    Write-Host "  L-009 already present in lessons.md — skipped"
+}
+
 # Upstream: gstack + superpowers (clone as skills)
 $ClaudeSkillsDir = "$HOME\.claude\skills"
 New-Item -ItemType Directory -Path $ClaudeSkillsDir -Force | Out-Null

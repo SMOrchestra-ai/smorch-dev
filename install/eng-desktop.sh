@@ -27,6 +27,9 @@ bash install/shared/install-base.sh
 # Phase 2 — plugins
 bash install/shared/install-plugins.sh "$PROFILE"
 
+# Phase 2.5 — patch ~/.claude/CLAUDE.md + lessons.md with L-009 push-discipline rule
+bash install/shared/patch-claude-md.sh
+
 # Phase 3 — cron sync
 bash install/shared/install-cron-sync.sh "$REPO_DIR"
 
