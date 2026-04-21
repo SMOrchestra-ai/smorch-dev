@@ -47,7 +47,7 @@ Meta:
 ## Topic: `overview`
 
 ```
-smorch-dev + smorch-ops — 17 commands, 2 plugins, 0 overlap.
+smorch-dev + smorch-ops — 18 commands, 2 plugins, 0 overlap.
 
 Workflow (smorch-dev, 11 commands):
   /smo-plan /smo-code /smo-score /smo-bridge-gaps

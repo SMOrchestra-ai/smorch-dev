@@ -39,7 +39,7 @@ iwr -useb https://raw.githubusercontent.com/SMOrchestra-ai/smorch-dev/main/insta
 
 ---
 
-## The 17 commands — by daily sequence
+## The 18 commands — by daily sequence
 
 ### Morning
 | Command | What it does |
@@ -86,9 +86,14 @@ iwr -useb https://raw.githubusercontent.com/SMOrchestra-ai/smorch-dev/main/insta
 |---------|--------------|
 | `/smo-retro` | Aggregate scores + handovers + incidents across all projects. Surface cross-project patterns. |
 
+### In-session guidance (v1.3.0-dev)
+| Command | What it does |
+|---------|--------------|
+| `/smo-dev-guide [topic]` | In-session cheat-sheet. No args → overview. `next` → context-aware next command (reads `docs/qa-scores/`, `docs/handovers/`, `docs/qa/`, `.smorch/project.json`, git state). Also: `chain`, `score`, `handover`, `qa`, `ship`, `deploy`, `architecture`, `plugins`, `overlay`, `skills`, `marketplace`, `validators`, `hooks`, `infra`, `servers`, `install`, `sync`, `drift`, `secrets`, `incident`, `locale`, `rollback`, `dirs`, `verbs`, `sops`, `lessons`, `stuck`, `sop-NN`, `l-NNN`. |
+
 ---
 
-## The 16 skills — by domain
+## The 17 skills — by domain
 
 ### Scoring + quality
 - **smo-scorer** (smorch-dev) — 5-hat orchestrator. Hat files: product-hat, architecture-hat, engineering-hat (+3 security Q), qa-hat, ux-hat + calibration-examples.
@@ -98,6 +103,9 @@ iwr -useb https://raw.githubusercontent.com/SMOrchestra-ai/smorch-dev/main/insta
 ### Self-improvement
 - **lessons-manager** (smorch-dev) — per-project `.claude/lessons.md`; Boris pillar #3. Auto-loaded at SessionStart.
 - **elegance-pause** (smorch-dev) — Boris pillar #5; 3-question protocol before non-trivial commits.
+
+### Guidance (v1.3.0-dev)
+- **dev-guide-router** (smorch-dev) — routes `/smo-dev-guide` topic queries. Context-aware `next` reads live state (qa-scores, handovers, qa, git/PR, overlay) to recommend the single right next command. First-match rule table; never invents commands or SOPs.
 
 ### Handover
 - **handover-generator** (smorch-dev) — generates dev→QA brief from SOP-13 template.
@@ -144,7 +152,7 @@ Every coding project declares its own overlay at `{project}/.smorch/`:
 my-project/
   CLAUDE.md              # 40-60 line project-specific header
   .smorch/
-    project.json         # {"project":"...","mena":true,"deploy":{...},"cost_tracking":{...}}
+    project.json         # {"project":"...","locale":"ar-MENA|en-US|mixed","qa":{"rollback_drill":"required|optional"},"deploy":{...},"cost_tracking":{...}}  # v1.2.0-dev schema
     skills/              # optional project-specific skills
     templates/           # optional project-specific templates
     overrides/           # optional scoring-rubric overrides
@@ -203,6 +211,10 @@ The plugin reads `.smorch/project.json` at SessionStart and adapts. No PR to the
 | "is any secret overdue" | `/smo-secrets --audit` |
 | "push the new skill" | `/smo-skill-sync` |
 | "end of sprint" | `/smo-retro` |
+| "what do I run next?" | `/smo-dev-guide next` |
+| "how does X work?" | `/smo-dev-guide {topic}` (e.g. `architecture`, `overlay`, `sync`) |
+| "look up SOP-14" | `/smo-dev-guide sop-14` |
+| "look up L-008" | `/smo-dev-guide l-008` |
 
 ---
 

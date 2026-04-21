@@ -6,7 +6,7 @@ guide,YouTube 10-Steps — Ultimate Claude Code,CodingProjects/smorch-dev/docs/Y
 guide,GitHub Actions setup,CodingProjects/smorch-dev/docs/GITHUB-ACTIONS-SETUP.md,"One-time: add 3 GitHub secrets + wire sync-to-machines workflow.",Mamoun ops,active
 guide,Plugin/Skills/Commands coding guide,CodingProjects/smorch-dev/docs/PLUGIN-SKILLS-COMMANDS-GUIDE.md,"Single consolidated reference: what each plugin owns, what each skill does, when to call each command.",all dev,active
 guide,Documentation index,CodingProjects/smorch-dev/docs/INDEX.md,"This file — map of all guides, SOPs, artifacts produced during rollout.",all,active
-sop,SOP-14 Plugin Workflow,CodingProjects/SOPs/sops/SOP-14-Plugin-Workflow.md,"NEW. Command surface (17 commands) + verb boundaries (ship vs deploy, triage vs incident).",all dev,active
+sop,SOP-14 Plugin Workflow,CodingProjects/SOPs/sops/SOP-14-Plugin-Workflow.md,"NEW. Command surface (18 commands incl. /smo-dev-guide) + verb boundaries (ship vs deploy, triage vs incident).",all dev,active
 sop,SOP-15 Cross-Machine Sync,CodingProjects/SOPs/sops/SOP-15-Cross-Machine-Sync.md,"NEW. Three-tier sync model: GitHub webhook + 30-min cron + drift detection.",ops,active
 sop,SOP-16 Secrets Rotation,CodingProjects/SOPs/sops/SOP-16-Secrets-Rotation.md,"NEW. 90-day rotation SLA across 4 servers. Per-secret-type procedures.",Mamoun,active
 sop,SOP-17 Hire Onboarding Engineering,CodingProjects/SOPs/sops/SOP-17-Hire-Onboarding-Engineering.md,"NEW. Day 1 setup → Week 1 ramp → Month 1 success criteria.",hiring,active

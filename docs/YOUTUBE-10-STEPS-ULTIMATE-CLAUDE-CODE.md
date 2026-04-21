@@ -12,7 +12,7 @@
 
 "Claude Code out of the box is a $20/month toy. In 10 steps I'll turn it into a $500K engineering team that plans, codes, tests, scores itself, deploys, rolls back, and never ships a bug without a post-mortem. Every step I'm showing you is what we run at SMOrchestra today across 4 servers and 11 projects. Save this — you'll come back."
 
-**B-roll:** terminal with `/smo` autocomplete dropping 17 commands. Split screen: left = default Claude, right = 17-command setup.
+**B-roll:** terminal with `/smo` autocomplete dropping 18 commands. Split screen: left = default Claude, right = 18-command setup.
 
 ---
 
@@ -268,7 +268,7 @@ my-project/
 - One pattern-interrupt every 2 min (screen flash, zoom, question to audience)
 
 ### Screenshots needed
-- `/smo` autocomplete showing 17 commands
+- `/smo` autocomplete showing 18 commands
 - 120-line `~/.claude/CLAUDE.md` scroll
 - A destructive-blocker hook firing
 - `ls ~/.claude/plugins/` showing 4 plugins
@@ -282,7 +282,7 @@ my-project/
 ### Thumbnail concept
 Split thumbnail:
 - Left: "BEFORE — chaos" terminal showing random Claude prompting
-- Right: "AFTER — 17 commands" showing `/smo` autocomplete
+- Right: "AFTER — 18 commands" showing `/smo` autocomplete
 - Big text: "10 STEPS" in orange
 - Small tag: "real setup, no theory"
 

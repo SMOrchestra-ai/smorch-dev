@@ -46,6 +46,8 @@ First line you see in Claude: any existing lessons surface immediately.
 /smo-health
 ```
 
+**Stuck or need a pointer?** `/smo-dev-guide next` reads live repo state (qa-scores, handovers, qa reports, git/PR status, overlay) and recommends the single next command. Other topics: `/smo-dev-guide chain`, `/smo-dev-guide architecture`, `/smo-dev-guide sop-14`, `/smo-dev-guide l-008`, `/smo-dev-guide stuck`.
+
 Returns:
 - Git state (local/remote match)
 - Server health for your deploy targets
