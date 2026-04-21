@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.0-dev] - 2026-04-21
+
+### Added
+- `/smo-dev-guide` command — in-session cheat-sheet router. Covers workflow chain, scoring gates, handover rubric, QA workflow, ship/deploy verb boundaries, architecture (plugins + overlay + marketplace + L-008), infrastructure (4 servers + Tailscale + install profiles + sync model), secrets rotation, incident response, hooks, validators, lessons, SOPs.
+- `dev-guide-router` skill — resolves topic queries; context-aware `next` reads `docs/qa-scores/`, `docs/handovers/`, `docs/qa/`, `.smorch/project.json`, git/PR state to recommend the single right next command. Never hallucinates commands or SOPs.
+- 27 topics total: overview, next, chain, score, handover, qa, ship, deploy, architecture, plugins, overlay, skills, marketplace, validators, hooks, infra, servers, install, sync, drift, secrets, incident, locale, rollback, dirs, verbs, sops, lessons, stuck, plus `sop-NN` and `l-NNN` lookup.
+
+### Changed
+- smorch-dev plugin command count: 10 → 11.
+- smorch-dev plugin skill count: 9 → 10.
+
 ## [1.2.0-dev] - 2026-04-21
 
 ### Added

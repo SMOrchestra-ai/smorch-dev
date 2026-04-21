@@ -8,7 +8,7 @@ Internal SMOrchestra dev + ops toolkit. Built after we shipped `eo-microsaas-dev
 
 | Path | Purpose |
 |------|---------|
-| `plugins/smorch-dev/` | **Workflow plugin** — 10 commands (plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro) + 8 skills. Installed on dev + QA machines. |
+| `plugins/smorch-dev/` | **Workflow plugin** — 11 commands (plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro, dev-guide) + 10 skills. Installed on dev + QA machines. |
 | `plugins/smorch-ops/` | **Infra plugin** — 7 commands (deploy, rollback, drift, health, incident, secrets, skill-sync) + 7 skills. Installed on all machines incl. servers. |
 | `install/` | One script per machine profile — `qa-machine.ps1` (Lana, Windows), `eng-desktop.sh` (dev desktops), `dev-server.sh`, `prod-server.sh` |
 | `scripts/` | `validate-plugins.sh` (CI), `sync-from-github.sh` (cron-invoked) |
@@ -36,10 +36,10 @@ iwr -useb https://raw.githubusercontent.com/SMOrchestra-ai/smorch-dev/main/insta
 bash <(curl -fsSL https://raw.githubusercontent.com/SMOrchestra-ai/smorch-dev/main/install/prod-server.sh)
 ```
 
-## Command surface — 17 total, no overlap
+## Command surface — 18 total, no overlap
 
 ### Workflow (smorch-dev)
-`/smo-plan` · `/smo-code` · `/smo-score` (--quick / --full) · `/smo-bridge-gaps` · `/smo-handover` · `/smo-qa-handover-score` · `/smo-qa-run` · `/smo-ship` (merge + tag) · `/smo-triage` (live debug) · `/smo-retro`
+`/smo-plan` · `/smo-code` · `/smo-score` (--quick / --full) · `/smo-bridge-gaps` · `/smo-handover` · `/smo-qa-handover-score` · `/smo-qa-run` · `/smo-ship` (merge + tag) · `/smo-triage` (live debug) · `/smo-retro` · `/smo-dev-guide` (in-session cheat-sheet)
 
 ### Ops (smorch-ops)
 `/smo-deploy` · `/smo-rollback` · `/smo-drift` · `/smo-health` · `/smo-incident` (post-mortem) · `/smo-secrets` · `/smo-skill-sync`
