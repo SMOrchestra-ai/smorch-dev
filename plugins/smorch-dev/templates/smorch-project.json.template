@@ -1,0 +1,40 @@
+{
+  "_comment": "Canonical .smorch/project.json template. Copy to {project}/.smorch/project.json and fill. Fields marked (required) must be set. All others have safe defaults that preserve today's behavior.",
+
+  "project": "{kebab-case-project-name}",
+  "stack": "nextjs-supabase | fastapi-postgres | n8n | other",
+
+  "locale": "ar-MENA",
+  "_locale_notes": "ar-MENA | en-US | mixed. Drives MENA check gating in /smo-qa-run (arabic-rtl-checker + mena-mobile-check 375px + Arabic axe). Default: ar-MENA (safe — preserves today's behavior). Set en-US only for internal tooling with no Arabic surface. CEO reviews flips to en-US in the PR that touches this file.",
+
+  "mena": true,
+  "_mena_notes": "Deprecated in favor of 'locale' but still read as fallback. Will be removed after v1.3.0.",
+
+  "deploy": {
+    "target": "smo-dev | smo-prod | eo-prod | smo-eo-qa",
+    "orchestration": "docker-compose | pm2 | systemd",
+    "path": "/opt/apps/{project}",
+    "health_endpoint": "/api/health"
+  },
+
+  "qa": {
+    "rollback_drill": "required",
+    "_rollback_drill_notes": "required | optional. Default required. Flipping to 'optional' (safe for doc-only or copy-only projects) requires CEO approval in the PR that flips it — not a runtime override.",
+    "scenarios_auto_generate": true
+  },
+
+  "scoring": {
+    "composite_gate": 92,
+    "hat_floor": 8.5,
+    "_notes": "Internal gate. Student projects use 90/8.0 via eo-microsaas-dev plugin."
+  },
+
+  "cost_tracker": {
+    "monthly_budget_usd": 200,
+    "alert_threshold_pct": 80
+  },
+
+  "overrides": {
+    "_notes": "Optional path to rubric overrides for smo-scorer. Files live in .smorch/overrides/*.json."
+  }
+}

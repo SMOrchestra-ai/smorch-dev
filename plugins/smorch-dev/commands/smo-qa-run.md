@@ -9,6 +9,9 @@ description: QA executes the validation suite per accepted handover brief. Produ
 
 ## Workflow
 
+0. Read `.smorch/project.json` for QA policy:
+   - `locale` (default `"ar-MENA"`): `"ar-MENA" | "en-US" | "mixed"` — drives MENA check gating
+   - `qa.rollback_drill` (default `"required"`): `"required" | "optional"` — CEO-gated per project (PR-level review)
 1. Read accepted handover brief
 2. Follow test scenarios in order: happy → empty → error → edge
 3. For each scenario:
@@ -16,10 +19,14 @@ description: QA executes the validation suite per accepted handover brief. Produ
    b. Perform actions
    c. Compare observed vs expected
    d. Screenshot + log output
-4. For MENA projects: run Arabic RTL + mobile 375px validation (uses arabic-rtl-checker + mena-mobile-check skills)
-5. Run axe-core accessibility scan
+4. MENA checks — gated on `locale`:
+   - `ar-MENA` or `mixed` → run arabic-rtl-checker + mena-mobile-check (375px) + Arabic axe pass
+   - `en-US` → skip all three. Report notes: `MENA checks: SKIPPED (locale=en-US)`
+5. Run axe-core accessibility scan (English pass, all locales)
 6. Check staging `/api/health` endpoint
-7. Execute rollback drill (dry-run): verify `/smo-rollback` would work
+7. Rollback drill — gated on `qa.rollback_drill`:
+   - `required` → execute dry-run `/smo-rollback`; failure blocks QA PASS
+   - `optional` → skip. Report notes: `Rollback drill: SKIPPED (qa.rollback_drill=optional per .smorch/project.json)`. Requires CEO approval in the PR that flipped this flag.
 8. Aggregate results into QA report
 
 ## Decision gate
@@ -59,13 +66,23 @@ description: QA executes the validation suite per accepted handover brief. Produ
 - Setup: 10,000 char input
 - Result: PASS (truncated gracefully)
 
-## MENA checks
+## MENA checks (locale=ar-MENA)
 - Arabic RTL: ✅
 - Mobile 375px: ✅
-- axe-core: ✅ 0 violations
+- axe-core (Arabic pass): ✅ 0 violations
 
-## Rollback drill (dry-run)
+## axe-core (English pass, all locales)
+- 0 violations
+
+## Rollback drill (dry-run) — required
 - `/smo-rollback --dry-run PR-47`: ✅ would succeed, SLA 90s
+
+<!--
+Alternative report lines when gates are skipped:
+- MENA checks: SKIPPED (locale=en-US per .smorch/project.json)
+- Rollback drill: SKIPPED (qa.rollback_drill=optional per .smorch/project.json, CEO-approved PR #{flip-pr})
+-->
+
 
 ## Decision: FAIL
 Return to dev. Blocker: error state crash in draft endpoint.

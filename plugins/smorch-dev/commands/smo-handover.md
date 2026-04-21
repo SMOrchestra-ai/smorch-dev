@@ -16,13 +16,14 @@ description: Generate dev→QA handover brief from SOP-13 template. Auto-fills P
    - Env vars (diff `.env.example`)
    - Score report (latest `docs/qa-scores/`)
    - Rollback command (from `.smorch/project.json` → `deploy.rollback_template`)
+   - Scenario stubs: invoke `brd-traceability --emit-scenarios` → 4 stubs per AC (happy/empty/error/edge) embedded in Section 2
 3. Prompt dev to fill:
-   - Happy / empty / error / edge test scenarios
+   - Replace every `{stub — ...}` placeholder in Section 2 with real test steps
    - Known issues + untested areas
    - Seed data + feature flags
 4. Dev reviews + signs off
 5. Commit to `docs/handovers/YYYY-MM-DD-PR-{n}-handover.md`
-6. Run `--validate` → check all 5 sections have content, PR URL resolves
+6. Run `--validate` → check all 5 sections have content, PR URL resolves, no `{stub — ...}` placeholders remain in Section 2
 7. Run `--notify` → Telegram ping to Lana with link
 
 ## Arguments

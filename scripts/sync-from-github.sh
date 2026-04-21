@@ -19,6 +19,22 @@ PROFILE="$(cat "$PROFILE_FILE")"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "[$TIMESTAMP] sync start (profile=$PROFILE)"
 
+# Observability heartbeat — fire-and-forget POST to n8n.
+# Non-blocking: 5s connect timeout, 5s total timeout. Failure to reach n8n must NOT
+# fail the sync; the dashboard will show the host as "stale" until it recovers.
+HEARTBEAT_URL="${SMORCH_SYNC_HEARTBEAT_URL:-https://flow.smorchestra.ai/webhook/smorch-sync-heartbeat}"
+heartbeat() {
+  local outcome="$1"
+  local sha="$2"
+  local body
+  body=$(printf '{"host":"%s","sha":"%s","timestamp":"%s","profile":"%s","sync_outcome":"%s"}' \
+    "$(hostname)" "$sha" "$TIMESTAMP" "$PROFILE" "$outcome")
+  curl -fsS --connect-timeout 5 --max-time 5 \
+    -X POST "$HEARTBEAT_URL" \
+    -H "Content-Type: application/json" \
+    -d "$body" >/dev/null 2>&1 || true
+}
+
 # 1. Pull latest from GitHub
 cd "$REPO_DIR"
 LOCAL_HEAD_BEFORE="$(git rev-parse HEAD)"
@@ -27,6 +43,7 @@ REMOTE_HEAD="$(git rev-parse origin/main)"
 
 if [ "$LOCAL_HEAD_BEFORE" = "$REMOTE_HEAD" ]; then
   echo "[$TIMESTAMP] already up to date"
+  heartbeat "up_to_date" "$LOCAL_HEAD_BEFORE"
   exit 0
 fi
 
@@ -36,6 +53,7 @@ git pull --quiet --ff-only origin main || {
   if [ -f "$HOME/smorch-brain/scripts/telegram-notify.sh" ]; then
     bash "$HOME/smorch-brain/scripts/telegram-notify.sh" "⚠️ smorch-dev sync failed on $(hostname): git pull non-ff"
   fi
+  heartbeat "pull_failed" "$LOCAL_HEAD_BEFORE"
   exit 1
 }
 
@@ -52,6 +70,7 @@ if [ -x scripts/validate-plugins.sh ]; then
     if [ -f "$HOME/smorch-brain/scripts/telegram-notify.sh" ]; then
       bash "$HOME/smorch-brain/scripts/telegram-notify.sh" "⚠️ smorch-dev validate failed on $(hostname) after pull — see /tmp/smorch-validate.log"
     fi
+    heartbeat "validate_failed" "$LOCAL_HEAD_AFTER"
     exit 1
   fi
 fi
@@ -67,5 +86,6 @@ if [ -f "$BRAIN_MANIFEST" ]; then
   fi
 fi
 
+heartbeat "synced" "$LOCAL_HEAD_AFTER"
 echo "[$TIMESTAMP] sync complete"
 exit 0

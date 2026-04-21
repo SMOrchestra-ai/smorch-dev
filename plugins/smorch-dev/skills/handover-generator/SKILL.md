@@ -36,19 +36,31 @@ Lana rejecting weak handovers is a documented SOP-13 pattern. Without a generato
 
 ## 2. Testability
 
-### Happy path
-- **Setup:** {steps to reproduce on Lana's machine}
-- **Actions:** {1-4 steps}
-- **Expected:** {observable outcome with screenshot/curl}
+> Auto-generated from `brd-traceability --emit-scenarios`. One block per AC, four scenarios each. Dev reviews + replaces `{stub — ...}` placeholders with real steps before committing. `--validate` fails on any remaining `{stub — ...}` text.
 
-### Empty state
-- {setup + actions + expected}
+### AC-{N.N} — {AC text}
 
-### Error state  
-- {setup + actions + expected}
+#### Happy path
+- **Setup:** {stub — minimal valid state}
+- **Actions:** {stub — primary user action}
+- **Expected:** {stub — paraphrase of AC outcome}
 
-### Edge cases
-- {setup + actions + expected}
+#### Empty state
+- **Setup:** {stub — preconditions absent}
+- **Actions:** {stub — same flow}
+- **Expected:** {stub — graceful empty-state UI}
+
+#### Error state
+- **Setup:** {stub — one upstream dep fails}
+- **Actions:** {stub — same flow}
+- **Expected:** {stub — user-facing error + recovery}
+
+#### Edge
+- **Setup:** {stub — boundary input}
+- **Actions:** {stub — same flow}
+- **Expected:** {stub — handled per AC limits}
+
+{repeat AC block for every AC-N.N in BRD}
 
 ## 3. Repro-ability
 
@@ -88,10 +100,11 @@ The generator populates what it can from git + filesystem:
 - Env vars needed: diff `.env.example` vs base
 - Score report: latest file in `docs/qa-scores/`
 - Rollback command: reads `.smorch/project.json` → `deploy.rollback_template`
+- Scenario stubs (Section 2): invokes `brd-traceability --emit-scenarios` to produce 4 scenarios × N ACs. Dev reviews + replaces placeholders; `--validate` blocks commit if any `{stub — ...}` text remains.
 
 ## What the dev must fill manually
 
-- Happy/empty/error/edge scenarios (the generator can't know test steps)
+- Replace scenario stubs (the generator seeds 4 stubs per AC — dev fills real steps, expected observable outcomes, and actions. Stubs obviously flagged as placeholders.)
 - Known issues + untested areas (honesty required)
 - Seed data + feature flags (project-specific)
 - Sign-off attestation
@@ -99,8 +112,8 @@ The generator populates what it can from git + filesystem:
 ## Gate
 
 After generation:
-1. Dev reviews + fills manual sections
-2. `/smo-handover --validate` checks: all 5 sections have content, rollback is defined, PR URL resolves
+1. Dev reviews + fills manual sections — replaces every `{stub — ...}` placeholder with real test steps
+2. `/smo-handover --validate` checks: all 5 sections have content, rollback is defined, PR URL resolves, **no `{stub — ...}` placeholders remain** in Section 2
 3. Dev commits handover to `docs/handovers/` (tracked in git for audit)
 4. `/smo-handover --notify` pings Lana (Telegram) with link
 

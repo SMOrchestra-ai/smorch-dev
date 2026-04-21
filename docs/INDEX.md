@@ -56,7 +56,6 @@ Last updated: 2026-04-19 after Phase 7 (migration day).
 | Install scripts | `smorch-dev/install/` | qa-machine.ps1, eng-desktop.sh, dev-server.sh, prod-server.sh |
 | Validator | `smorch-dev/scripts/validate-plugins.sh` | Schema + frontmatter + dead-ref check (runs in CI) |
 | Sync script | `smorch-dev/scripts/sync-from-github.sh` | Cron-invoked pull + install + validate |
-| Grep audit | `smorch-dev/scripts/grep-audit-rename.sh` | One-shot rename safety net |
 
 ---
 

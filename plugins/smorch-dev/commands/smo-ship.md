@@ -9,23 +9,35 @@ description: Merge + tag (NOT deploy). Final gate before server push. 92+ score 
 
 ## Workflow
 
-1. Verify score gate (composite ≥ 92, no hat < 8.5) from latest `docs/qa-scores/`
-2. Verify QA passed from latest `docs/qa/`
-3. Verify handover score ≥ 80 from `docs/handovers/`
-4. Verify git hygiene:
-   - Branch up to date with base
-   - No uncommitted changes
-   - `validate-plugins.sh` green (for plugin repo changes)
-5. Run `npm run build`, `npm test`, `npm audit --audit-level=high`
-6. Create PR via `gh pr create` with body:
+### Phase 1 — Parallel gate preamble (fail fast)
+
+Fire these 5 read-only gate checks **concurrently** (single background batch, `wait` for all, aggregate results). Each gate emits `GATE_{name}: PASS|FAIL <reason>`; if any fail, print the union of failure reasons and abort before Phase 2.
+
+| Gate | Source |
+|---|---|
+| `GATE_score` | latest `docs/qa-scores/` composite ≥ 92 |
+| `GATE_hat_floor` | same file — no hat < 8.5 |
+| `GATE_qa` | latest `docs/qa/` → Decision = PASS |
+| `GATE_handover` | latest `docs/handovers/` → score ≥ 80 |
+| `GATE_git_clean` | `git status --porcelain` empty AND branch up-to-date with base |
+
+**Failure surface rule:** the error message names the specific gate(s) that failed (e.g., `GATE_score FAIL: composite=88 < 92 (docs/qa-scores/2026-04-21-1402.md)`). Parallelization must not muddle which gate blocked.
+
+### Phase 2 — Serial build verification
+
+6. `npm run build && npm test && npm audit --audit-level=high` (serial — tests depend on build artifacts). For plugin repos, also run `scripts/validate-plugins.sh`.
+
+### Phase 3 — Serial merge ceremony
+
+7. Create PR via `gh pr create` with body:
    - Score report (inline)
    - Handover brief link
    - QA report link
    - Elegance pause block from commit
    - BRD ACs covered (from @AC tags)
-7. On merge: tag release per semver (auto-bump patch unless --minor/--major)
-8. Push tag
-9. Append to `docs/ships/trend.csv`
+8. On merge: tag release per semver (auto-bump patch unless --minor/--major)
+9. Push tag
+10. Append to `docs/ships/trend.csv`
 
 ## Arguments
 
