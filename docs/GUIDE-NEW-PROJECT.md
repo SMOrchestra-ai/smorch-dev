@@ -81,7 +81,10 @@ Then customize `CLAUDE.md` and `.smorch/project.json` — see step 3.
 {
   "project": "{project-name}",
   "display_name": "{Human-Readable Name}",
-  "mena": true,
+  "locale": "ar-MENA",
+  "qa": {
+    "rollback_drill": "required"
+  },
   "stack": "nextjs-14 + supabase + claude + ghl",
   "language_primary": "english",
   "language_secondary": "arabic",
@@ -204,8 +207,10 @@ In session:
 That's it. Plugin reads BRD, reads lessons, proposes plan, waits for approval. Standard chain from there:
 
 ```
-/smo-plan → /smo-code → /smo-score → /smo-handover → Lana → /smo-qa-run → /smo-ship → /smo-deploy
+/smo-plan → /smo-code → /smo-score → /smo-bridge-gaps (if 85-91) → /smo-handover → /smo-qa-handover-score (Lana) → /smo-qa-run (Lana) → /smo-ship → /smo-deploy
 ```
+
+Unsure what to run next mid-flow? `/smo-dev-guide next` reads live state and tells you.
 
 ---
 

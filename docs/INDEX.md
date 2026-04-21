@@ -35,7 +35,7 @@ Last updated: 2026-04-19 after Phase 7 (migration day).
 
 | SOP | File | Status | Purpose |
 |-----|------|:------:|---------|
-| SOP-14 | `SOPs/sops/SOP-14-Plugin-Workflow.md` | NEW | Command surface (17 commands) + verb boundaries |
+| SOP-14 | `SOPs/sops/SOP-14-Plugin-Workflow.md` | NEW | Command surface (18 commands incl. /smo-dev-guide) + verb boundaries |
 | SOP-15 | `SOPs/sops/SOP-15-Cross-Machine-Sync.md` | NEW | Cron + GitHub webhook sync model |
 | SOP-16 | `SOPs/sops/SOP-16-Secrets-Rotation.md` | NEW | 90-day SLA across 4 servers |
 | SOP-17 | `SOPs/sops/SOP-17-Hire-Onboarding-Engineering.md` | NEW | Day 1 → Month 1 hire ramp |
