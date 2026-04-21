@@ -51,7 +51,7 @@ Last updated: 2026-04-19 after Phase 7 (migration day).
 
 | Artifact | Location | Contents |
 |----------|----------|----------|
-| smorch-dev plugin | `smorch-dev/plugins/smorch-dev/` | 10 commands + 9 skills + templates |
+| smorch-dev plugin | `smorch-dev/plugins/smorch-dev/` | 11 commands + 10 skills + templates |
 | smorch-ops plugin | `smorch-dev/plugins/smorch-ops/` | 7 commands + 7 skills + templates |
 | Install scripts | `smorch-dev/install/` | qa-machine.ps1, eng-desktop.sh, dev-server.sh, prod-server.sh |
 | Validator | `smorch-dev/scripts/validate-plugins.sh` | Schema + frontmatter + dead-ref check (runs in CI) |
