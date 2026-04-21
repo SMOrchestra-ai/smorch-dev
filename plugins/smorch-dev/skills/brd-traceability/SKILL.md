@@ -141,6 +141,48 @@ Action: Update BRD to include AC-9.1 or remove test
 
 ---
 
+## Scenario stub emit mode (consumed by handover-generator)
+
+In addition to the coverage check, this skill emits 4 QA scenario stubs per AC when invoked with `--emit-scenarios`. `handover-generator` calls this mode so dev isn't authoring scenarios from a blank page — dev just reviews + edits the stubs.
+
+### Contract
+
+For each `AC-N.N` in `architecture/brd.md`:
+
+```markdown
+### AC-{N.N} — {AC text, trimmed}
+
+#### Happy path
+- **Setup:** {stub — "minimal valid state to exercise AC-N.N"}
+- **Actions:** {stub — "perform primary user action from AC"}
+- **Expected:** {stub — paraphrase of AC's observable outcome}
+
+#### Empty state
+- **Setup:** {stub — "preconditions absent (empty list / no record / null input)"}
+- **Actions:** {stub — "trigger same flow"}
+- **Expected:** {stub — "graceful empty-state UI, no crash"}
+
+#### Error state
+- **Setup:** {stub — "one upstream dependency fails (network off / API 500 / invalid input)"}
+- **Actions:** {stub — "trigger same flow"}
+- **Expected:** {stub — "user-facing error message, app recovers, no data loss"}
+
+#### Edge
+- **Setup:** {stub — "boundary input (max length / unicode / RTL / concurrent writer / 0 / very large)"}
+- **Actions:** {stub — "trigger same flow"}
+- **Expected:** {stub — "handled gracefully per AC's stated limits"}
+```
+
+### Why stubs, not full scenarios
+
+The skill knows the AC text but does NOT know the UI, the endpoint shape, or what "invalid input" means for this feature. Dev reviews each stub and replaces the placeholder with real reproduction steps. Saves ~5 min per handover vs. blank-page authoring; does not hide gaps because stubs are obviously placeholders if not filled.
+
+### Where the output lands
+
+`handover-generator` embeds the emitted block in Section 2 (Testability) of the brief. Dev edits before committing. `/smo-handover --validate` fails if any stub still contains literal `{stub — ...}` placeholder text.
+
+---
+
 ## Anti-patterns
 
 - **Tagging after-the-fact to pass the check:** Tests should be written DURING development, not retrofit. Re-score honestly.

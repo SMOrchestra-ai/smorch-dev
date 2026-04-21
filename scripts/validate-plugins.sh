@@ -35,9 +35,16 @@ validate_plugin() {
     warn "plugin.json is not valid JSON"
   else
     ok "plugin.json is valid JSON"
-    for key in name version description commands skills; do
+    for key in name version description; do
       if ! python3 -c "import json; d=json.load(open('$MANIFEST')); exit(0 if '$key' in d else 1)" 2>/dev/null; then
         warn "plugin.json missing required key: $key"
+      fi
+    done
+    # Per L-008: commands[] and skills[] arrays MUST NOT be present in plugin.json
+    # (folders are auto-discovered by Claude Code). Fail if they appear.
+    for forbidden in commands skills; do
+      if python3 -c "import json; d=json.load(open('$MANIFEST')); exit(0 if '$forbidden' in d else 1)" 2>/dev/null; then
+        warn "plugin.json MUST NOT contain '$forbidden' array (L-008 — folders auto-discovered)"
       fi
     done
   fi

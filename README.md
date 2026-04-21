@@ -11,7 +11,7 @@ Internal SMOrchestra dev + ops toolkit. Built after we shipped `eo-microsaas-dev
 | `plugins/smorch-dev/` | **Workflow plugin** — 10 commands (plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro) + 8 skills. Installed on dev + QA machines. |
 | `plugins/smorch-ops/` | **Infra plugin** — 7 commands (deploy, rollback, drift, health, incident, secrets, skill-sync) + 7 skills. Installed on all machines incl. servers. |
 | `install/` | One script per machine profile — `qa-machine.ps1` (Lana, Windows), `eng-desktop.sh` (dev desktops), `dev-server.sh`, `prod-server.sh` |
-| `scripts/` | `validate-plugins.sh` (CI), `sync-from-github.sh` (cron-invoked), `grep-audit-rename.sh` (one-shot rename tool) |
+| `scripts/` | `validate-plugins.sh` (CI), `sync-from-github.sh` (cron-invoked) |
 | `docs/` | ADRs + machine install matrix + retirement plan |
 
 ## Install matrix

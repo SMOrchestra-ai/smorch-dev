@@ -24,7 +24,6 @@ script,Install — dev-server,CodingProjects/smorch-dev/install/dev-server.sh,"s
 script,Install — prod-server,CodingProjects/smorch-dev/install/prod-server.sh,"eo-prod + smo-prod. Ops + security-hardener baseline applied.",ops,active
 script,validate-plugins.sh,CodingProjects/smorch-dev/scripts/validate-plugins.sh,"Schema-checks both plugin.json files. Runs in CI via .github/workflows/validate.yml.",CI,active
 script,sync-from-github.sh,CodingProjects/smorch-dev/scripts/sync-from-github.sh,"Cron-invoked (30 min): pull + install + validate. Telegram alert on failure.",all machines,active
-script,grep-audit-rename.sh,CodingProjects/smorch-dev/scripts/grep-audit-rename.sh,"One-shot: grep literal 'smorch-dev' across all configs before rename. Safety net.",one-time,active
 workflow,validate.yml,CodingProjects/smorch-dev/.github/workflows/validate.yml,"GitHub Actions: runs validate-plugins.sh on every PR + push.",CI,active
 workflow,sync-to-machines.yml,CodingProjects/smorch-dev/.github/workflows/sync-to-machines.yml,"GitHub Actions: on push, SSH to all 4 servers via Tailscale + trigger sync-from-github.sh. <60s target.",CI,active
 config,Global CLAUDE.md,~/.claude/CLAUDE.md,"Trimmed 251 → 116 lines. Boris-discipline. References SOP-14/15/16/17.",global,active
