@@ -8,3 +8,6 @@ node_modules/
 .idea/
 *.swp
 .claude/scratch/
+
+# Machine role marker (written by install scripts)
+.sync-profile
