@@ -14,6 +14,7 @@ All dev-related how-to guides live at **`docs/guides/`**. No dev guide lives out
 | [`docs/guides/02-PATCH-V2-QA.md`](guides/02-PATCH-V2-QA.md) | Bug fix · v2 upgrade · QA operations |
 | [`docs/guides/03-CUSTOMIZE-DEV-PLUGIN.md`](guides/03-CUSTOMIZE-DEV-PLUGIN.md) | When to use a non-`smorch-dev` plugin |
 | [`docs/guides/04-SETUP-ENVIRONMENT.md`](guides/04-SETUP-ENVIRONMENT.md) | Fresh machine install (eng / QA / server) |
+| [`docs/guides/05-PLUGIN-COMPLETE-GUIDE.md`](guides/05-PLUGIN-COMPLETE-GUIDE.md) | **Complete plugin guide** — 3-layer architecture, every command + skill, 3 dev scenarios, newcomer Q&A |
 | [`docs/guides/README.md`](guides/README.md) | Guides SSOT policy + update flow |
 
 ---
