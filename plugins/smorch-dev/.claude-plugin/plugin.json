@@ -1,7 +1,7 @@
 {
   "name": "smorch-dev",
-  "version": "1.3.0-dev",
-  "description": "SMOrchestra internal development workflow plugin. 10 slash commands (plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro) + 9 skills. 5-hat scoring with internal calibration (92+ ship gate, 8.5 hat floor). MENA checks (Arabic RTL + mobile 375px), BRD traceability, elegance pause, lessons.md self-improvement, QA handover scoring, cost tracking. For dev + QA machines (Mamoun + Lana + future hires).",
+  "version": "1.4.0-dev",
+  "description": "SMOrchestra internal development workflow plugin. 12 slash commands (smorch-dev-start session bootstrap, plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro, dev-guide) + 11 skills. /smorch-dev-start runs a 4-layer session bootstrap (machine + context + project + input-quality scoring) with GREEN/YELLOW/RED gate and --fix auto-heal — works on Mac, Windows, Linux, servers. 5-hat scoring with internal calibration (92+ ship gate, 8.5 hat floor, weighted top-3 per SOP-23). MENA checks (Arabic RTL + mobile 375px), BRD traceability, elegance pause, lessons.md self-improvement, QA handover scoring, cost tracking. For every SMOrchestra machine: Mamoun, Lana, future hires, QA.",
   "author": {
     "name": "SMOrchestra.ai",
     "email": "smorchestra.ai@gmail.com"
@@ -13,10 +13,13 @@
     "claude-code",
     "smorchestra",
     "internal",
+    "session-bootstrap",
     "5-hat-scoring",
+    "input-scoring",
     "mena",
     "tdd",
     "handover-scoring",
-    "self-improvement"
+    "self-improvement",
+    "cross-platform"
   ]
 }
