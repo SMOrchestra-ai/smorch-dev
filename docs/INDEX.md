@@ -1,7 +1,20 @@
 # smorch-dev — Documentation Index
 
 **All guides, SOPs, and artifacts created during the internal dev plugin rollout.**
-Last updated: 2026-04-19 after Phase 7 (migration day).
+Last updated: 2026-04-23 — `docs/guides/` promoted to canonical SSOT for all dev guides.
+
+## Canonical guides (start here)
+
+All dev-related how-to guides live at **`docs/guides/`**. No dev guide lives outside this repo.
+
+| File | Purpose |
+|---|---|
+| [`docs/guides/00-MACRO-SUMMARY.md`](guides/00-MACRO-SUMMARY.md) | Infrastructure state + session-bootstrap policy |
+| [`docs/guides/01-START-NEW-APP.md`](guides/01-START-NEW-APP.md) | Zero-to-shippable for a new app |
+| [`docs/guides/02-PATCH-V2-QA.md`](guides/02-PATCH-V2-QA.md) | Bug fix · v2 upgrade · QA operations |
+| [`docs/guides/03-CUSTOMIZE-DEV-PLUGIN.md`](guides/03-CUSTOMIZE-DEV-PLUGIN.md) | When to use a non-`smorch-dev` plugin |
+| [`docs/guides/04-SETUP-ENVIRONMENT.md`](guides/04-SETUP-ENVIRONMENT.md) | Fresh machine install (eng / QA / server) |
+| [`docs/guides/README.md`](guides/README.md) | Guides SSOT policy + update flow |
 
 ---
 
