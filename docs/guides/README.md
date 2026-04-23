@@ -13,6 +13,7 @@ All previous copies (working docs in `~/Desktop/repo-workspace/_workspace/`, scr
 | `02-PATCH-V2-QA.md` | Bug fix / v2 upgrade / QA operations (hotfix + regular fix + v2 decision tree + Lana's QA) | Engineers + Lana |
 | `03-CUSTOMIZE-DEV-PLUGIN.md` | When a project uses `eo-microsaas-dev` or a custom plugin instead of `smorch-dev` (SOP-33) | Engineers working on EO students or client engagements |
 | `04-SETUP-ENVIRONMENT.md` | Fresh machine install (eng desktop Mac/Linux, QA Mac/Win, new VPS) + `/smorch-dev-start` verify | Every new hire (Day 1) |
+| `05-PLUGIN-COMPLETE-GUIDE.md` | Complete plugin guide: 3-layer architecture (commands · smorch-dev skills · gstack+superpowers) · every command + skill briefly · 3 dev scenarios (new app / v2 / patch+QA) · newcomer Q&A | Everyone — definitive reference |
 
 ## Rule (L-026 candidate)
 
