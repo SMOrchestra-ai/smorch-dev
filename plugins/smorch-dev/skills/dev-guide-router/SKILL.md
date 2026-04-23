@@ -27,8 +27,8 @@ One topic per invocation. If two are obviously linked, end with `also see: {topi
 
 ### Full topic list
 
-Workflow & gates:
-`overview` · `next` · `chain` · `score` · `handover` · `qa` · `ship` · `deploy`
+Bootstrap & gates:
+`start` · `overview` · `next` · `chain` · `score` · `handover` · `qa` · `ship` · `deploy`
 
 Architecture:
 `architecture` · `plugins` · `overlay` · `skills` · `marketplace` · `validators` · `hooks`
@@ -44,13 +44,68 @@ Meta:
 
 ---
 
+## Topic: `start`
+
+```
+/smorch-dev-start — session bootstrap gate. Run FIRST every session.
+
+Works on: Mac (Mamoun, engineers), Windows (Lana, QA), Linux, servers.
+Auto-detects role from ~/.sync-profile OR hostname heuristic.
+Roles: eng-desktop · qa-machine · dev-server · prod-server.
+
+Four layers:
+
+  Layer 1 — Machine
+    tools (git/gh/node/claude/tailscale/docker per role)
+    plugins (smorch-dev + smorch-ops installed)
+    global config (~/.claude/{CLAUDE.md, lessons.md, settings.json})
+    sync job (cron/launchd registered)
+
+  Layer 2 — Context
+    cwd inside ~/Desktop/repo-workspace/
+    remote is SMOrchestra-ai or smorchestraai-code
+    branch is dev (not main — L-014)
+    local not >24h behind origin
+    no uncommitted changes >1h (L-009)
+
+  Layer 3 — Project (Boris enforcement)
+    CLAUDE.md · .smorch/project.json · architecture/brd.md
+    docs/ tree (6 subfolders) · .claude/settings.json
+    .env.example (no secrets) · .gitignore (required patterns)
+    dev_plugin match (SOP-33)
+
+  Layer 4 — Input inventory + quality scoring (0-10 per dimension)
+    Completeness (40%) · Depth (30%) · Traceability (20%) · Freshness (10%)
+    Missing-input report per project type (customer-facing-app, internal-tool, etc.)
+    INPUT-READINESS gate: ≥85 GREEN · 70-84 YELLOW · <70 RED
+
+Flags:
+  --fix              auto-heal safe findings
+  --quiet            banner + next-action only
+  --profile=<role>   override detection
+  --skip-project     machine-only (Layers 1+2)
+  --layer=<N>        run only layer N
+
+Exit codes: 0 GREEN · 1 YELLOW · 2 RED · 3 --fix applied · 10 profile unknown
+
+Never auto-does: force-push, reset --hard, secrets rotation, deploys.
+
+also see: next · chain · score
+```
+
+---
+
 ## Topic: `overview`
 
 ```
-smorch-dev + smorch-ops — 18 commands, 2 plugins, 0 overlap.
+smorch-dev + smorch-ops — 19 commands, 2 plugins, 0 overlap.
 
-Workflow (smorch-dev, 11 commands):
-  /smo-plan /smo-code /smo-score /smo-bridge-gaps
+Session bootstrap (run FIRST every session):
+  /smorch-dev-start  — machine + context + project + input-quality (4 layers)
+                       GREEN/YELLOW/RED gate, --fix for auto-heal
+
+Workflow (smorch-dev, 12 commands):
+  /smorch-dev-start /smo-plan /smo-code /smo-score /smo-bridge-gaps
   /smo-handover /smo-qa-handover-score /smo-qa-run
   /smo-ship /smo-triage /smo-retro
   /smo-dev-guide (this)
@@ -60,13 +115,15 @@ Ops (smorch-ops, 7 commands):
   /smo-incident /smo-secrets /smo-skill-sync
 
 Gates (non-negotiable):
+  /smorch-dev-start = GREEN before /smo-plan (session bootstrap gate)
   composite ≥ 92, no hat < 8.5 before /smo-ship (SOP-02)
   handover score ≥ 80 before QA starts (SOP-13)
   all QA scenarios PASS + rollback drill before ship (SOP-01)
   L-009 push discipline every work unit
   destructive-blocker + secret-scanner hooks always on
 
-Try: /smo-dev-guide next         — "what should I run now?"
+Try: /smo-dev-guide start        — bootstrap + input-readiness details
+     /smo-dev-guide next         — "what should I run now?"
      /smo-dev-guide architecture — plugin + overlay model
      /smo-dev-guide infra        — 4 servers + sync model
      /smo-dev-guide stuck        — troubleshooting decision tree
@@ -94,6 +151,9 @@ Read live state to decide. Halt on first matching rule; order matters.
 
 | Condition | Recommendation |
 |---|---|
+| Session-bootstrap never run (no `~/.claude/.last-dev-start` or >8h old) | `/smorch-dev-start` — always the first command per session |
+| Most recent `/smorch-dev-start` result = RED or YELLOW | `/smorch-dev-start --fix` (or read remediation text) |
+| Layer-4 input_readiness < 85 | fix weakest 3 inputs per the report |
 | No `architecture/brd.md` | `/smo-plan` — write BRD first |
 | BRD exists, no source files or tests touching it | `/smo-code` — TDD starts here |
 | Code committed, no `docs/qa-scores/` file for this branch | `/smo-score --quick` |
@@ -402,7 +462,7 @@ also see: locale · rollback · architecture
 ```
 Skills per plugin:
 
-smorch-dev (9 skills):
+smorch-dev (11 skills):
   smo-scorer            5-hat rubric + auto-caps
   lessons-manager       lessons.md auto-promote
   elegance-pause        pre-commit elegance review
@@ -412,7 +472,8 @@ smorch-dev (9 skills):
   handover-generator    SOP-13 brief auto-fill
   qa-handover-scorer    Lana's 5-dim rubric
   cost-tracker          Claude/OpenAI/DB cost caps
-  dev-guide-router      this (v1.3.0-dev)
+  dev-guide-router      /smo-dev-guide router
+  dev-start-bootstrap   /smorch-dev-start 4-layer bootstrap (v1.4.0-dev)
 
 smorch-ops (7 skills):
   security-hardener     UFW + fail2ban + SSH posture
@@ -933,6 +994,16 @@ also see: sops
 
 ```
 Stuck? Find your row:
+
+  "Opening a session and things feel wrong / new machine"
+    → /smorch-dev-start (4-layer bootstrap: machine + context + project + inputs)
+    → /smorch-dev-start --fix (auto-heal safe findings)
+    → if exit 10: /smorch-dev-start --profile=eng-desktop (or qa-machine)
+
+  "Input-readiness score too low (<70)"
+    → read Layer 4 output, fix weakest 3 inputs
+    → scaffold missing mandatory files: /smorch-dev-start --fix
+    → rewrite shallow BRD: /smo-plan re-engages BRD
 
   "Score stuck at 88"
     → /smo-bridge-gaps — fix weakest hat first
