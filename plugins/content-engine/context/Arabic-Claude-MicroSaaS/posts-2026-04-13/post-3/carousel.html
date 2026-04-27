@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Cairo', sans-serif; background: #111; display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; justify-content: center; }
+
+.slide {
+  width: 1080px; height: 1080px;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  align-items: center;
+  padding: 40px 60px;
+  color: #fff;
+}
+.logo {
+  position: absolute; top: 28px; left: 28px;
+  width: 52px; height: 52px;
+  border: 2px solid #FF6600;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 18px; color: #FF6600;
+  background: transparent;
+}
+.step-num {
+  margin-top: 60px;
+  font-size: 24px;
+  color: #FF6600;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.title {
+  font-size: 52px;
+  font-weight: 900;
+  color: #FF6600;
+  text-align: center;
+  margin-top: 20px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #FF6600;
+  line-height: 1.4;
+  max-width: 850px;
+}
+.main-text {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-top: 28px;
+  line-height: 1.6;
+  max-width: 850px;
+}
+.sub-text {
+  font-size: 26px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.6;
+  max-width: 800px;
+}
+.divider {
+  position: absolute;
+  bottom: 200px;
+  left: 60px; right: 60px;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
+.cursor {
+  position: absolute;
+  bottom: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 24px;
+  background: #FF6600;
+}
+.page-num {
+  position: absolute;
+  bottom: 28px; left: 40px;
+  font-size: 16px;
+  color: rgba(255,255,255,0.35);
+}
+.diamond {
+  position: absolute;
+  bottom: 28px; right: 40px;
+  width: 12px; height: 12px;
+  background: #FF6600;
+  transform: rotate(45deg);
+}
+.orange-pill {
+  background: #FF6600;
+  color: #000;
+  font-weight: 700;
+  font-size: 28px;
+  padding: 16px 60px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 12px;
+  max-width: 700px;
+  width: 100%;
+}
+.cover-hook {
+  font-size: 46px;
+  font-weight: 900;
+  color: #FF6600;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 40px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #FF6600;
+  max-width: 850px;
+}
+.swipe {
+  font-size: 36px;
+  font-weight: 900;
+  color: #FF6600;
+  margin-top: 40px;
+}
+.arrow-list {
+  text-align: right;
+  margin-top: 20px;
+  max-width: 750px;
+  width: 100%;
+}
+.arrow-item {
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 2;
+  padding-right: 10px;
+}
+.arrow-item span {
+  color: #FF6600;
+  margin-left: 12px;
+}
+.quote-box {
+  border-right: 4px solid #FF6600;
+  padding: 12px 24px;
+  margin-top: 20px;
+  max-width: 750px;
+}
+.quote-box .quote-text {
+  font-size: 30px;
+  font-weight: 700;
+  color: #FF6600;
+  line-height: 1.5;
+  text-align: right;
+}
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="cover-hook" style="margin-top:80px;">
+    ٩٠٪ من الـ SaaS بالوطن العربي<br>محتاج يُبنى من الصفر
+  </div>
+  <div class="main-text" style="font-size:36px;margin-top:30px;">بس مش هيك أغلب المؤسسين بيبدوا</div>
+  <div class="sub-text" style="font-size:30px;margin-top:20px;">بيبدوا بالكود. بيبنوا ٣ شهور<br>وبيكتشفوا إنه ما حد بده المنتج</div>
+  <div class="divider" style="bottom:140px;"></div>
+  <div class="swipe">مرّر ◁◁◁</div>
+  <div class="page-num">1/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 2: The Solution -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الحل</div>
+  <div class="title">٥ بوابات قبل ما تبني</div>
+  <div class="main-text">بنيت نظام من ٥ سكوركاردز<br>ما بتنتقل للمرحلة اللي بعدها<br>إلا لما تجيب درجة كافية</div>
+  <div class="sub-text">كل بوابة بتختبر بُعد مختلف من فكرتك<br>إذا ما عديت وحدة: لا تبني. صلّح أولاً</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">2/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 3: Scorecard 1 -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">سكوركارد ١</div>
+  <div class="title">وضوح الفكرة</div>
+  <div class="main-text">شو بتبني ولمين؟</div>
+  <div class="sub-text">بتقدر تشرح فكرتك بجملة وحدة؟<br>بتعرف الفرق بينك وبين اللي موجود بالسوق؟<br><br>إذا ما تقدر توصف المنتج بـ ١٠ ثواني<br>العميل مش رح يفهمه بساعة</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">3/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 4: Scorecard 2 -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">سكوركارد ٢</div>
+  <div class="title">وضوح العميل</div>
+  <div class="main-text">بتقدر تشرح مشكلته<br>أحسن منه؟</div>
+  <div class="sub-text">لازم تتخيل شخص واحد بالضبط — مش "السوق"<br><br>وين موجود؟ شو اللي يعلّقه كل يوم؟<br>شو اللي بيحكيه لزملاءه عن المشكلة؟<br><br>إذا ما بتعرف — ارجع اسأل ١٠ عملاء</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">4/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 5: Scorecard 3 -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">سكوركارد ٣</div>
+  <div class="title">جاذبية السوق</div>
+  <div class="main-text">حجم الألم × القدرة الشرائية</div>
+  <div class="sub-text">سوق بدون ألم = منتج ما حد بيشتريه<br>سوق بألم بس بدون فلوس = نفس النتيجة<br><br>لازم تختبر ٣ أشياء:<br>قدرة شرائية؟ سهولة وصول؟ هل السوق يكبر؟</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">5/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 6: Scorecard 3 detail -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">سكوركارد ٣</div>
+  <div class="title" style="font-size:44px;">٣ أبعاد للسوق</div>
+  <div class="arrow-list">
+    <div class="arrow-item"><span>←</span> القدرة الشرائية: هل العميل يقدر يدفع؟</div>
+    <div class="arrow-item"><span>←</span> سهولة الوصول: وين متجمعين؟</div>
+    <div class="arrow-item"><span>←</span> مرحلة النمو: السوق يكبر ولا يموت؟</div>
+  </div>
+  <div class="sub-text" style="margin-top:24px;">بُعد واحد واطي = صلّحه أو اقتل الفكرة<br>بدون تعلّق عاطفي</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">6/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 7: Scorecard 4 -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">سكوركارد ٤</div>
+  <div class="title">قوة الاستراتيجية</div>
+  <div class="main-text">من ١٣ استراتيجية GTM<br>أي وحدة إلك؟</div>
+  <div class="sub-text">outbound؟ محتوى؟ مجتمع؟ شراكات؟<br><br>١٠ أسئلة بالداتا بتحدد مسارك<br>مش لأن غيرك سواها — لأن الأرقام حكت<br><br>اختيار خاطئ = ٦ شهور محروقة</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">7/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 8: Scorecard 5 -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">سكوركارد ٥</div>
+  <div class="title">جاهزية التنفيذ</div>
+  <div class="main-text">عندك اللي يلزم تبدأ؟</div>
+  <div class="sub-text">الوقت؟ الأدوات؟ المعرفة الأساسية؟<br><br>كثير مؤسسين فكرتهم ممتازة<br>بس ما عندهم الجاهزية ينفذوها<br><br>أحسن تعرف هلأ — مش بعد ما تبلّش</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">8/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 9: The Gate Rule -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">القاعدة</div>
+  <div class="title" style="border:none;padding:0;font-size:44px;">٥ بوابات</div>
+  <div class="main-text" style="font-size:48px;color:#FF6600;margin-top:30px;">إذا ما عديت وحدة:<br>لا تبني. صلّح أولاً</div>
+  <div class="sub-text" style="margin-top:24px;">هاد مش عائق — هاد حماية<br><br>أحسن تضيع ساعة بالتقييم<br>من ٣ شهور بالبناء الغلط</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">9/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 10: Why most fail -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الواقع</div>
+  <div class="title">ليش أغلبهم بيفشلوا</div>
+  <div class="main-text">أغلب المؤسسين بيتخطوا هاد الإشي</div>
+  <div class="sub-text">بيبدوا بالكود على طول<br>بيبنوا ٣ شهور بالعتمة<br>بيكتشفوا ما حد بده المنتج<br>بيغيّروا الاتجاه<br>وبيكرروا نفس الغلطة<br><br>٣ مرات قبل ما ينسحبوا</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">10/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 11: The System Flow -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">المسار</div>
+  <div class="title" style="font-size:44px;">كيف بيشتغل النظام</div>
+  <div class="arrow-list">
+    <div class="arrow-item"><span>١</span> جاوب على أسئلة السكوركارد</div>
+    <div class="arrow-item"><span>٢</span> عطيها لـ Claude يقيّمها</div>
+    <div class="arrow-item"><span>٣</span> صلّح الضعف اللي طلع</div>
+    <div class="arrow-item"><span>٤</span> انتقل للسكوركارد اللي بعده</div>
+    <div class="arrow-item"><span>٥</span> عدّيت الخمسة؟ ابلّش ابني</div>
+  </div>
+  <div class="sub-text" style="margin-top:16px;">كل مرحلة بتحميك من غلطة مختلفة</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">11/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 12: The Equation -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">المعادلة</div>
+  <div class="title" style="border:none;padding:0;font-size:42px;">ما تبني بالعتمة</div>
+  <div class="main-text" style="font-size:36px;margin-top:30px;">٥ سكوركاردز × Claude = قرار مبني على داتا</div>
+  <div class="sub-text" style="margin-top:24px;">مش على إحساس. مش على حماس<br>على أرقام وتقييم حقيقي<br><br>الأذكياء بيبدوا بالتقييم<br>والباقي بيبدوا بالكود</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">12/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 13: Summary -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الخلاصة</div>
+  <div class="title" style="border:none;padding:0;font-size:44px;">هاد مش نصائح</div>
+  <div class="main-text" style="font-size:52px;color:#FF6600;margin-top:30px;">هاد نظام</div>
+  <div class="sub-text" style="margin-top:24px;">٥ بوابات. ٣٠ سؤال. تقييم AI<br>= فكرة مختبرة قبل ما تكتب سطر كود<br><br>الفرق بين ٣ شهور ضايعة<br>و٣٠ دقيقة بتنقذك</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">13/14</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 14: CTA -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="main-text" style="margin-top:80px;font-size:44px;color:#FF6600;">حابب تبني<br>المايكرو ساس تاعك؟</div>
+  <div style="width:100%;max-width:700px;border-top:3px solid #FF6600;margin:30px 0;"></div>
+  <div class="orange-pill">الرابط بالبايو</div>
+  <div style="width:100%;max-width:850px;border-top:1px solid rgba(255,255,255,0.2);margin:30px 0;"></div>
+  <div class="sub-text" style="font-size:28px;color:rgba(255,255,255,0.6);">شاركني بالتعليقات:<br>من الـ ٥ سكوركاردز — أي وحدة<br>بتحس إنها أصعب بوابة عليك؟</div>
+  <div class="page-num">14/14</div>
+  <div class="diamond"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Cairo', sans-serif; background: #111; display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; justify-content: center; }
+
+.slide {
+  width: 1080px; height: 1080px;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  align-items: center;
+  padding: 40px 60px;
+  color: #fff;
+}
+.logo {
+  position: absolute; top: 28px; left: 28px;
+  width: 52px; height: 52px;
+  border: 2px solid #FF6600;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 18px; color: #FF6600;
+  background: transparent;
+}
+.step-num {
+  margin-top: 60px;
+  font-size: 24px;
+  color: #FF6600;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.title {
+  font-size: 52px;
+  font-weight: 900;
+  color: #FF6600;
+  text-align: center;
+  margin-top: 20px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #FF6600;
+  line-height: 1.4;
+  max-width: 850px;
+}
+.main-text {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-top: 28px;
+  line-height: 1.6;
+  max-width: 850px;
+}
+.sub-text {
+  font-size: 26px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.6;
+  max-width: 800px;
+}
+.divider {
+  position: absolute;
+  bottom: 200px;
+  left: 60px; right: 60px;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
+.cursor {
+  position: absolute;
+  bottom: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 24px;
+  background: #FF6600;
+}
+.page-num {
+  position: absolute;
+  bottom: 28px; left: 40px;
+  font-size: 16px;
+  color: rgba(255,255,255,0.35);
+}
+.diamond {
+  position: absolute;
+  bottom: 28px; right: 40px;
+  width: 12px; height: 12px;
+  background: #FF6600;
+  transform: rotate(45deg);
+}
+.orange-pill {
+  background: #FF6600;
+  color: #000;
+  font-weight: 700;
+  font-size: 28px;
+  padding: 16px 60px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 12px;
+  max-width: 700px;
+  width: 100%;
+}
+.cover-hook {
+  font-size: 46px;
+  font-weight: 900;
+  color: #FF6600;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 40px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #FF6600;
+  max-width: 850px;
+}
+.swipe {
+  font-size: 36px;
+  font-weight: 900;
+  color: #FF6600;
+  margin-top: 40px;
+}
+.arrow-list {
+  text-align: right;
+  margin-top: 20px;
+  max-width: 750px;
+  width: 100%;
+}
+.arrow-item {
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 2;
+  padding-right: 10px;
+}
+.arrow-item span {
+  color: #FF6600;
+  margin-left: 12px;
+}
+.quote-box {
+  border-right: 4px solid #FF6600;
+  padding: 12px 24px;
+  margin-top: 20px;
+  max-width: 750px;
+}
+.quote-box .quote-text {
+  font-size: 30px;
+  font-weight: 700;
+  color: #FF6600;
+  line-height: 1.5;
+  text-align: right;
+}
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Cover Hook -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="cover-hook" style="margin-top:80px;">
+    بتدفع ٥ آلاف دولار<br>لاستشاري يقيّم فكرتك؟
+  </div>
+  <div class="main-text" style="font-size:64px;color:#FF6600;margin-top:40px;">مش لازم</div>
+  <div class="sub-text" style="margin-top:30px;font-size:28px;">في طريقة أسرع وأدق وبالمجان<br>بتحصل على نفس الفيدباك — أو أحسن</div>
+  <div class="divider" style="bottom:140px;"></div>
+  <div class="swipe">مرّر ◁◁◁</div>
+  <div class="page-num">1/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 2: What I Do -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الطريقة</div>
+  <div class="title">Claude كشريك تقييم</div>
+  <div class="main-text">بيسألني الأسئلة<br>اللي ما حد بيسألني إياها</div>
+  <div class="sub-text">وبيكسر افتراضاتي<br>قبل ما السوق يكسرها<br><br>مش chatbot. مش أداة كتابة<br>هاد شريك تقييم حقيقي</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">2/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 3: The 5 Scorecards Intro -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">النظام</div>
+  <div class="title">٥ سكوركاردز</div>
+  <div class="main-text">بنيت ٥ بوابات تقييم<br>كل وحدة بتختبر بُعد مختلف من فكرتك</div>
+  <div class="sub-text">ما بتنتقل للمرحلة اللي بعدها<br>إلا لما تجيب درجة كافية<br><br>كل سكوركارد فيه ٦ أسئلة محددة<br>بجاوب عليها وبعطيها لـ Claude</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">3/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 4: Scorecards List -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الخمسة</div>
+  <div class="title">البوابات</div>
+  <div class="arrow-list">
+    <div class="arrow-item"><span>←</span> وضوح الفكرة: شو بتبني ولمين؟</div>
+    <div class="arrow-item"><span>←</span> وضوح العميل المثالي: بتحس بألمه؟</div>
+    <div class="arrow-item"><span>←</span> جاذبية السوق: قدرة شرائية + نمو</div>
+    <div class="arrow-item"><span>←</span> قوة الاستراتيجية: كيف رح توصل؟</div>
+    <div class="arrow-item"><span>←</span> جاهزية التنفيذ: عندك اللي يلزم؟</div>
+  </div>
+  <div class="sub-text" style="margin-top:20px;">٥ بوابات × ٦ أسئلة = ٣٠ سؤال<br>بيفصلوا بين فكرة وفكرة حقيقية</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">4/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 5: How Claude Evaluates -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">كيف بيشتغل</div>
+  <div class="title">التقييم</div>
+  <div class="main-text">بجاوب على الأسئلة<br>وبعطيها لـ Claude</div>
+  <div class="sub-text">هو بيقيّم كل جواب من ١٠<br>بيتحدى الافتراضات الضعيفة<br>وبيحكيلي بالظبط وين الضعف<br><br>نفس الشغل اللي بيسويه استشاري بـ ٥٠٠٠$<br>بس بـ ٣٠ دقيقة</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">5/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 6: The Result -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">النتيجة</div>
+  <div class="title">قرار واضح</div>
+  <div class="main-text">بعرف إذا الفكرة تستاهل<br>قبل ما أكتب سطر كود واحد</div>
+  <div class="sub-text">مش بعد ٣ شهور بناء<br>مش بعد ما أصرف الميزانية<br><br><strong style="color:#FF6600;">قبل. من اليوم</strong></div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">6/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 7: Before vs After -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الفرق</div>
+  <div class="title" style="border:none;padding:0;font-size:40px;">بدون النظام</div>
+  <div class="main-text" style="font-size:30px;color:rgba(255,255,255,0.5);">تبني ٣ شهور → تكتشف ما حد بده المنتج<br>تغيّر الاتجاه → تبني ٣ شهور ثاني → نفس النتيجة</div>
+  <div style="width:60%;border-top:2px solid #FF6600;margin:28px 0;"></div>
+  <div class="title" style="border:none;padding:0;font-size:40px;margin-top:0;">مع النظام</div>
+  <div class="main-text" style="font-size:30px;">٣٠ سؤال → تقييم Claude → قرار واضح<br>تبني بس اللي تأكدت إنه مطلوب</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">7/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 8: Example Question -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">مثال حي</div>
+  <div class="title">سؤال من السكوركارد</div>
+  <div class="quote-box">
+    <div class="quote-text">"بتقدر تشرح مشكلة عميلك<br>أحسن من شرحه لنفسه؟"</div>
+  </div>
+  <div class="sub-text" style="margin-top:24px;">إذا الجواب لا — ما تبني<br>ارجع اسأل ١٠ عملاء وتعال<br><br>Claude مش رح يمشّيك<br>رح يتحداك لما جوابك ضعيف</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">8/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 9: The Condition -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الشرط</div>
+  <div class="title">الأسئلة الصح</div>
+  <div class="main-text">Claude قوي بقد ما أسئلتك قوية</div>
+  <div class="sub-text">زبالة تدخل = زبالة تطلع<br>حتى مع أقوى AI بالعالم<br><br>عشان هيك بنيت الأسئلة جاهزة:<br>٣٠ سؤال مجرّب على ٩١ شركة</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">9/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 10: Reframe -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الحقيقة</div>
+  <div class="title" style="border:none;padding:0;">Claude مش chatbot</div>
+  <div class="main-text" style="font-size:44px;color:#FF6600;margin-top:30px;">Claude هو الاستشاري<br>اللي بيشتغل ٢٤ ساعة</div>
+  <div class="sub-text" style="margin-top:24px;">ما بيتعب. ما بيجامل. ما بيخاف يحكيلك الحقيقة<br><br>بس لازم تبنيله الإطار الصح<br>وهاد بالظبط اللي سويته</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">10/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 11: Summary -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="step-num">الخلاصة</div>
+  <div class="title" style="border:none;padding:0;font-size:42px;">ما تبني بالعتمة</div>
+  <div class="main-text" style="margin-top:30px;">٥ سكوركاردز + Claude = قرار مبني على داتا</div>
+  <div class="sub-text" style="margin-top:24px;">أغلب المؤسسين بيبدوا بالكود<br>الأذكياء بيبدوا بالتقييم<br><br>الفرق بين ٣ شهور ضايعة<br>و٣٠ دقيقة بتنقذك</div>
+  <div class="divider"></div>
+  <div class="cursor"></div>
+  <div class="page-num">11/12</div>
+  <div class="diamond"></div>
+</div>
+
+<!-- Slide 12: CTA -->
+<div class="slide">
+  <div class="logo">MA</div>
+  <div class="main-text" style="margin-top:100px;font-size:44px;color:#FF6600;">جربت تقيّم فكرتك<br>بـ Claude؟</div>
+  <div style="width:100%;max-width:700px;border-top:3px solid #FF6600;margin:30px 0;"></div>
+  <div class="orange-pill">الفيديو الكامل بالتعليقات</div>
+  <div style="width:100%;max-width:850px;border-top:1px solid rgba(255,255,255,0.2);margin:30px 0;"></div>
+  <div class="sub-text" style="font-size:28px;color:rgba(255,255,255,0.6);">شاركني بالتعليقات:<br>شو أكثر افتراض عن منتجك<br>ما جربته فعلياً مع عميل حقيقي؟</div>
+  <div class="page-num">12/12</div>
+  <div class="diamond"></div>
+</div>
+
+</body>
+</html>

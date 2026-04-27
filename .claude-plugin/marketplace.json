@@ -5,8 +5,8 @@
     "url": "https://smorchestra.ai"
   },
   "metadata": {
-    "description": "SMOrchestra internal dev + ops toolkit for Claude Code. Two plugins: smorch-dev (workflow: plan → code → score → handover → ship) + smorch-ops (infra: deploy / rollback / drift / health / incident / secrets).",
-    "version": "1.0.0"
+    "description": "SMOrchestra internal dev + ops + content toolkit for Claude Code. Three plugins: smorch-dev (workflow: plan → code → score → handover → ship) + smorch-ops (infra: deploy / rollback / drift / health / incident / secrets) + content-engine (bilingual LinkedIn content production with quality rubric).",
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -18,6 +18,11 @@
       "name": "smorch-ops",
       "source": "./plugins/smorch-ops",
       "description": "Infrastructure plugin. 7 slash commands (/smo-deploy, /smo-rollback, /smo-drift, /smo-health, /smo-incident, /smo-secrets, /smo-skill-sync) + 7 skills (security-hardener, incident-runbook, deploy-pipeline, rollback-runbook, drift-detector, secrets-manager, codex-doctrine). Install on all machines including servers."
+    },
+    {
+      "name": "content-engine",
+      "source": "./plugins/content-engine",
+      "description": "Content production plugin for Mamoun Alamouri's LinkedIn. 4 skills (brand-voice-smorchestra + content-quality-rubric foundation skills, linkedin-post-en, linkedin-post-ar-jordan). 8-dimension quality rubric, 9.0 ship gate. Bilingual EN + Jordanian Arabic. GHL drafts only — never publishes directly."
     }
   ]
 }
