@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/l3-health-check.sh --quiet",
+            "description": "Verify gstack + superpowers (L3 cascade) reachable. Refuse session if missing — clean failure beats silent drift. SOP-36."
+          }
+        ]
+      }
+    ]
+  }
+}

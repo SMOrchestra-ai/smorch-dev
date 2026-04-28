@@ -1,7 +1,7 @@
 {
   "name": "smorch-dev",
-  "version": "1.4.0-dev",
-  "description": "SMOrchestra internal development workflow plugin. 12 slash commands (smorch-dev-start session bootstrap, plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro, dev-guide) + 11 skills. /smorch-dev-start runs a 4-layer session bootstrap (machine + context + project + input-quality scoring) with GREEN/YELLOW/RED gate and --fix auto-heal — works on Mac, Windows, Linux, servers. 5-hat scoring with internal calibration (92+ ship gate, 8.5 hat floor, weighted top-3 per SOP-23). MENA checks (Arabic RTL + mobile 375px), BRD traceability, elegance pause, lessons.md self-improvement, QA handover scoring, cost tracking. For every SMOrchestra machine: Mamoun, Lana, future hires, QA.",
+  "version": "1.5.0",
+  "description": "SMOrchestra internal development workflow plugin. v1.5 — L3 cascade revision (SOP-36): 15 slash commands wired to gstack (29 skills) + superpowers (14 skills) + 11 frozen L2 skills (5-hat scoring, MENA + RTL, BRD traceability, elegance pause, lessons, handover, cost). 12 existing commands (smorch-dev-start, plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro, dev-guide) revised to invoke L3 hard-required (warn-default on laptops, strict-refuse on servers/CI). 3 new commands (worktree, benchmark, review-pr) wrap superpowers:using-git-worktrees, gstack:benchmark, superpowers:requesting-code-review. SessionStart hook runs l3-health-check.sh. Pre-commit guard (check-no-l2-reimplementation.sh) prevents L2 from drifting into L3 territory. Anti-bloat: L2 list is FROZEN at 11.",
   "author": {
     "name": "SMOrchestra.ai",
     "email": "smorchestra.ai@gmail.com"
@@ -20,6 +20,10 @@
     "tdd",
     "handover-scoring",
     "self-improvement",
-    "cross-platform"
+    "cross-platform",
+    "l3-cascade",
+    "gstack",
+    "superpowers",
+    "anti-drift"
   ]
 }

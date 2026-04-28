@@ -30,11 +30,14 @@ One topic per invocation. If two are obviously linked, end with `also see: {topi
 Bootstrap & gates:
 `start` · `overview` · `next` · `chain` · `score` · `handover` · `qa` · `ship` · `deploy`
 
+L3 cascade (gstack + superpowers):
+`l3` · `worktree` · `benchmark` · `review-pr`
+
 Architecture:
 `architecture` · `plugins` · `overlay` · `skills` · `marketplace` · `validators` · `hooks`
 
 Infrastructure:
-`infra` · `servers` · `install` · `sync` · `drift` · `secrets` · `incident`
+`infra` · `servers` · `install` · `sync` · `drift` · `secrets` · `incident` · `parity`
 
 Config & policy:
 `locale` · `rollback` · `dirs` · `verbs`
@@ -986,6 +989,171 @@ Promotion (3+ projects trigger → global):
 Query specific lesson: /smo-dev-guide l-009
 
 also see: sops
+```
+
+---
+
+## Topic: `l3` (L3 cascade map — SOP-36)
+
+```
+L3 = the universal-craft layer. gstack (29 skills) + superpowers (14 skills).
+Hard-required: sessions refuse to start if L3 missing (run scripts/l3-health-check.sh).
+
+Wiring map — which L1 command invokes which L3 skill:
+
+  /smo-plan       → superpowers:writing-plans (always)
+                  → gstack:plan-eng-review (always)
+                  → gstack:plan-ceo-review (--ceo or BRD ambiguity)
+                  → gstack:plan-design-review (fullstack-with-ui)
+
+  /smo-worktree   → superpowers:using-git-worktrees
+
+  /smo-code       → superpowers:test-driven-development (per AC)
+                  → superpowers:subagent-driven-development (>1 file)
+                  → superpowers:dispatching-parallel-agents (3+ investigations)
+
+  /smo-triage     → gstack:investigate
+                  → superpowers:systematic-debugging
+
+  /smo-review-pr  → superpowers:requesting-code-review
+                  → superpowers:receiving-code-review (on feedback)
+                  → gstack:review (optional pre-landing)
+
+  /smo-benchmark  → gstack:benchmark
+
+  /smo-bridge-gaps → routed by lowest hat:
+                    Product → gstack:plan-ceo-review
+                    Architecture → gstack:plan-eng-review
+                    UX → gstack:plan-design-review
+                    Engineering → superpowers:requesting-code-review
+                    QA → gstack:qa (extended)
+
+  /smo-qa-run     → gstack:qa (or qa-only)
+                  → gstack:browse (UI scenarios)
+
+  /smo-ship       → gstack:ship (PR template)
+                  → superpowers:finishing-a-development-branch (merge flow)
+
+  /smo-retro      → gstack:retro
+
+  /smo-deploy     → gstack:canary (post-deploy)
+
+  /smo-incident   → superpowers:systematic-debugging (root-cause phase)
+
+Anti-bloat rule (SOP-36): L2 skills MUST NOT reimplement L3 work.
+Pre-commit guard: scripts/check-no-l2-reimplementation.sh.
+
+also see: chain · ship · sop-36
+```
+
+---
+
+## Topic: `worktree`
+
+```
+/smo-worktree — create isolated git worktree before /smo-code on multi-file work.
+
+Why: superpowers:using-git-worktrees ensures setup runs, test baseline is clean,
+working dir is isolated from main. Boris pillar 2 (parallel work) requires this.
+
+When required: any /smo-code session that touches >1 file.
+When optional: doc-only PR, single-file fix.
+
+Output: worktree at .claude/worktrees/{feature}/ with clean test baseline verified.
+Next: /smo-code in the worktree path.
+
+Cleanup: superpowers:finishing-a-development-branch (run by /smo-ship) handles
+worktree teardown after merge.
+
+also see: l3 · ship
+```
+
+---
+
+## Topic: `benchmark`
+
+```
+/smo-benchmark — performance regression detection. Run before /smo-ship if any UI/API code changed.
+
+Engine: gstack:benchmark via the browse daemon. Establishes baselines for:
+  - page load times
+  - Core Web Vitals (LCP, FID, CLS)
+  - resource sizes / bundle size
+  - API response time (where applicable)
+
+First-run: writes docs/benchmarks/baseline.json from current branch.
+Subsequent runs: compare current vs baseline, fail if any tracked metric
+regressed >10%.
+
+Output: docs/benchmarks/YYYY-MM-DD-{branch}.md.
+
+Gate: GATE_benchmark in /smo-ship. Skipped if no UI/API code touched in PR.
+
+also see: l3 · ship · score
+```
+
+---
+
+## Topic: `review-pr`
+
+```
+/smo-review-pr — external adversarial code review of an open PR.
+Distinct from /smo-score (internal 5-hat calibration).
+
+Engine:
+  1. superpowers:requesting-code-review — dispatch reviewer subagent with
+     CRAFTED CONTEXT (not session history). Reviewer is fresh; coordinator
+     gets a structured report.
+  2. (optional) gstack:review — pre-landing pass for SQL safety, LLM trust
+     boundary violations, conditional side effects.
+  3. (optional) gstack:security-review — built-in Claude command for
+     security-focused diff review.
+
+If reviewer returned feedback:
+  4. superpowers:receiving-code-review — author technically evaluates
+     feedback (not emotional response). Verify, ask, restate before
+     implementing.
+
+Output: docs/reviews/YYYY-MM-DD-PR-{n}.md. brd-traceability re-validates
+AC coverage post-fix.
+
+When: after /smo-score (internal calibration ≥92), before /smo-ship.
+
+also see: l3 · score · ship
+```
+
+---
+
+## Topic: `parity` (server-side parity — SOP-37)
+
+```
+Server-side dev parity: smo-dev + eo-dev (renamed from smo-eo-qa) run
+Claude Code with the SAME plugin stack as your laptop.
+
+Servers:
+  smo-dev   62.171.165.57   (Tailscale 100.83.242.99)   — SMO dev VPS
+  eo-dev    84.247.172.113  (Tailscale 100.99.145.22)   — EO dev VPS (renamed)
+
+Parity checklist (per server):
+  □ Claude Code installed (claude --version)
+  □ ~/.claude/skills/gstack present (29 skill dirs)
+  □ superpowers plugin installed via /plugin install
+  □ smorch-dev plugin synced (current tag matches local)
+  □ smorch-ops plugin synced
+  □ ~/.claude/CLAUDE.md synced from canonical
+
+Sync command: /smo-skill-sync --server eo-dev (or smo-dev, or all-dev)
+
+Verify: claude -p "/smo-dev-guide --verify-parity" on each server.
+Expected: L3 ✓ gstack(29) superpowers(14) + plugin versions match.
+
+Server discipline (already in CLAUDE.md):
+  - Never edit files directly on a server
+  - Pull tags only, restart PM2
+  - No paid-resource creates from server (RULE 0 inherited)
+  - Branch protection enforced via SOP-31/33/34 validators
+
+also see: l3 · sync · sop-37 · servers
 ```
 
 ---

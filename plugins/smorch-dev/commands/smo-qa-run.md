@@ -7,27 +7,40 @@ description: QA executes the validation suite per accepted handover brief. Produ
 **For:** Lana after `/smo-qa-handover-score` returned ≥80.
 **When:** Accepted handover. Executing QA now.
 
+## L3 cascade (hard-required, see SOP-36)
+
+| Step | L3 Skill | When |
+|------|----------|------|
+| 4-phase validation | `gstack:qa` | Always (full validation) |
+| Report-only mode | `gstack:qa-only` | If `--report-only` flag set |
+| Headless UI driver | `gstack:browse` | For any UI scenario in the handover |
+
+L2: `qa-handover-scorer` cross-references handover scenarios against observed coverage.
+
 ## Workflow
 
 0. Read `.smorch/project.json` for QA policy:
    - `locale` (default `"ar-MENA"`): `"ar-MENA" | "en-US" | "mixed"` — drives MENA check gating
    - `qa.rollback_drill` (default `"required"`): `"required" | "optional"` — CEO-gated per project (PR-level review)
 1. Read accepted handover brief
-2. Follow test scenarios in order: happy → empty → error → edge
-3. For each scenario:
+2. **L3 gstack:qa** (or **gstack:qa-only** if `--report-only`) — runs the 4-phase validation suite over the handover scenarios
+3. For UI scenarios: **L3 gstack:browse** drives the headless browser (sub-second per page)
+4. Follow test scenarios in order: happy → empty → error → edge
+5. For each scenario:
    a. Execute setup steps
    b. Perform actions
    c. Compare observed vs expected
-   d. Screenshot + log output
-4. MENA checks — gated on `locale`:
+   d. Screenshot + log output (via gstack:browse)
+6. MENA checks — gated on `locale`:
    - `ar-MENA` or `mixed` → run arabic-rtl-checker + mena-mobile-check (375px) + Arabic axe pass
    - `en-US` → skip all three. Report notes: `MENA checks: SKIPPED (locale=en-US)`
-5. Run axe-core accessibility scan (English pass, all locales)
-6. Check staging `/api/health` endpoint
-7. Rollback drill — gated on `qa.rollback_drill`:
+7. Run axe-core accessibility scan (English pass, all locales)
+8. Check staging `/api/health` endpoint
+9. Rollback drill — gated on `qa.rollback_drill`:
    - `required` → execute dry-run `/smo-rollback`; failure blocks QA PASS
    - `optional` → skip. Report notes: `Rollback drill: SKIPPED (qa.rollback_drill=optional per .smorch/project.json)`. Requires CEO approval in the PR that flipped this flag.
-8. Aggregate results into QA report
+10. **L2 qa-handover-scorer** cross-references handover scenarios against observed coverage; flags any scenario in handover that wasn't actually exercised
+11. Aggregate results into QA report
 
 ## Decision gate
 
