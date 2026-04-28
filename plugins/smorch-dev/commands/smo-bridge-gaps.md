@@ -6,22 +6,35 @@ description: Fix the lowest-scoring hat when composite is 85-91. Turns a blocked
 
 **When:** `/smo-score` returned 85-91. Need to lift weakest hat to ≥8.5 to reach 92 composite.
 
+## L3 cascade (hard-required, see SOP-36)
+
+Route to the matching L3 review skill based on the lowest-scoring hat:
+
+| Lowest hat | L3 Skill | Why |
+|-----------|----------|-----|
+| Product | `gstack:plan-ceo-review` | Strategy / scope rethink |
+| Architecture | `gstack:plan-eng-review` | Architecture / data-flow / edge cases |
+| UX (frontend) | `gstack:plan-design-review` | Design dimensions 0-10 fixes |
+| Engineering | `superpowers:requesting-code-review` | External adversarial review of the diff |
+| QA | `gstack:qa` (extended coverage) | Re-run QA with deeper test scenarios |
+
+L2: `smo-scorer` re-scores after each fix; loop until composite ≥ 92 OR escalate.
+
 ## Workflow
 
 1. Read latest score report from `docs/qa-scores/`
-2. For hat(s) scoring <8.5:
-   - Open hat rubric (e.g., `smo-scorer/engineering-hat.md`)
-   - Identify questions that dragged the score
-   - Propose minimal fix plan per question
-3. Categorize:
+2. **L2 smo-scorer** identifies lowest hat
+3. Route to the L3 skill in the table above based on lowest hat
+4. **L3 review** surfaces specific gaps (questions that dragged the score)
+5. Categorize fixes:
    - **AUTO:** safe mechanical fixes (apply immediately)
    - **REVIEW:** human decision needed (present options)
    - **DEFER:** too big for this PR (create follow-up issue)
-4. Apply AUTO fixes
-5. Prompt user for REVIEW items
-6. Re-score target hat
-7. If ≥8.5 → return to `/smo-score` for full recompute
-8. If still <8.5 after 2 loops → escalate to `/smo-plan` rework
+6. Apply AUTO fixes
+7. Prompt user for REVIEW items
+8. **L2 smo-scorer** re-scores target hat
+9. If ≥8.5 AND composite ≥92 → exit (ready for `/smo-ship`)
+10. If still <8.5 after 2 loops → escalate to `/smo-plan` rework
 
 ## Arguments
 

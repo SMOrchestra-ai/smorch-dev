@@ -16,6 +16,14 @@ description: SEV1-4 incident post-mortem generator. Follows SOP-10 structure. Di
 | SEV3 | Minor feature down, workaround exists | <2h | Whoever owns the area |
 | SEV4 | Cosmetic, unusual-but-handled | Next sprint | Backlog |
 
+## L3 cascade (per SOP-36)
+
+| Step | L3 Skill | When | Owner |
+|------|----------|------|-------|
+| Root-cause analysis | `superpowers:systematic-debugging` | Step 4 (the "why" before the write-up) | superpowers |
+
+L2: incident-runbook owns the SOP-10 structure (detect/ack/mitigate/resolve/review). L3 owns the analytical method (hypothesis → evidence → root cause).
+
 ## Workflow
 
 1. Read `docs/triage/` for the associated triage report (if /smo-triage was run first)
@@ -28,16 +36,19 @@ description: SEV1-4 incident post-mortem generator. Follows SOP-10 structure. Di
    - SEV classification
    - Blast radius (users affected, revenue impacted, data lost)
    - Timeline (detect → ack → mitigate → resolve)
-   - Root cause (one sentence)
-   - Why our current safeguards missed it
-4. Auto-generate action items:
+4. **L3 superpowers:systematic-debugging** — drives root-cause analysis before write-up:
+   - Hypothesis enumeration (≤3, ranked by likelihood)
+   - Evidence gathering (logs, git blame, deploy/canary deltas, related incidents)
+   - Root cause statement (one sentence, falsifiable)
+   - Why current safeguards missed it (which hat / check / SOP)
+5. Auto-generate action items:
    - If no regression test exists for the cause → append to backlog
    - If drift was involved → propose canonical update
    - If human error → propose SOP tightening
-5. Save to `docs/incidents/YYYY-MM-DD-SEV{n}-{slug}.md`
-6. Append row to `docs/incidents/trend.csv`
-7. For SEV1/2: send summary via Telegram to Mamoun
-8. If recurring pattern → append lesson to `smorch-brain/canonical/lessons.md`
+6. Save to `docs/incidents/YYYY-MM-DD-SEV{n}-{slug}.md`
+7. Append row to `docs/incidents/trend.csv`
+8. For SEV1/2: send summary via Telegram to Mamoun
+9. If recurring pattern → append lesson to `smorch-brain/canonical/lessons.md`
 
 ## Arguments
 

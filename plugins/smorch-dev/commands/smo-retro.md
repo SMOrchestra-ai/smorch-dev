@@ -15,21 +15,35 @@ Per plan ADR-002: no synced `scores-aggregate.csv`. Merge conflicts would eat ti
 - `CodingProjects/*/docs/qa/YYYY-MM-DD-*.md`
 - Aggregates in memory + writes single retro report
 
+## L3 cascade (hard-required, see SOP-36)
+
+| Step | L3 Skill | What it owns |
+|------|----------|--------------|
+| Engineering retro | `gstack:retro` | Commit history + work patterns + per-person breakdown + quality trends + persistent history |
+
+L2: `lessons-manager` promotes patterns triggered ≥3 times across projects to `~/.claude/lessons.md` (global).
+
 ## Workflow
 
-1. Find all `CodingProjects/*/docs/qa-scores/trend.csv` files
-2. Filter rows to last N days (default 14)
-3. Group by project, compute avg composite + avg per-hat + trend
-4. Parse all `docs/handovers/trend.csv` for same window
-5. Scan `docs/incidents/` for any SEV1-3 in window
-6. Pull `.claude/lessons.md` from each project — count triggers in window
-7. Cross-project pattern detection:
+1. **L3 gstack:retro** — runs the canonical engineering retrospective:
+   - Commit history analysis (last 14 days default)
+   - Work patterns (PR size distribution, time-of-day, stuck branches)
+   - Code quality metrics (test coverage delta, linter trends)
+   - Per-person breakdown with praise + growth areas
+   - Trend analysis vs prior sprints
+2. Find all `CodingProjects/*/docs/qa-scores/trend.csv` files (read-only aggregation)
+3. Filter rows to last N days (default 14)
+4. Group by project, compute avg composite + avg per-hat + trend
+5. Parse all `docs/handovers/trend.csv` for same window
+6. Scan `docs/incidents/` for any SEV1-3 in window
+7. **L2 lessons-manager** — count triggers in window per project; promote patterns triggered ≥3 times to `~/.claude/lessons.md`
+8. Cross-project pattern detection:
    - Hat consistently low across multiple projects → team-wide rule
    - Handover dimension consistently rejected → dev training
    - Same bug class across projects → shared skill/lesson
-8. Write `docs/retros/YYYY-MM-DD-sprint-retro.md`
-9. Propose lessons for `smorch-brain/canonical/lessons.md` (cross-project)
-10. Prune stale per-project lessons (>90 days untriggered)
+9. Merge gstack:retro output + L2 cross-project view → `docs/retros/YYYY-MM-DD-sprint-retro.md`
+10. Propose new global lessons (PR against smorch-brain canonical)
+11. **L2 lessons-manager** prunes stale per-project lessons (>90 days untriggered)
 
 ## Arguments
 

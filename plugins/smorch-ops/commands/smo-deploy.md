@@ -7,6 +7,14 @@ description: SSH deploy via ecosystem.config.js. Project-aware (reads .smorch/pr
 **Scope:** Push a shipped PR to a target server. Verify health. Rollback on failure.
 **When:** After `/smo-ship` merged + tagged. Ready for server.
 
+## L3 cascade (per SOP-36)
+
+| Step | L3 Skill | When | Owner |
+|------|----------|------|-------|
+| Post-deploy canary | `gstack:canary` | Always after step 6 (health 200 OK) | gstack |
+
+L2: deploy-pipeline runbook owns SSH/PM2/drift. L3 owns post-deploy regression watch.
+
 ## Workflow
 
 1. Read `.smorch/project.json` for deploy target (staging | production | both)
@@ -23,15 +31,22 @@ description: SSH deploy via ecosystem.config.js. Project-aware (reads .smorch/pr
    - `pm2 reload {pm2_process_name}`
 5. Wait 10s
 6. Hit `/api/health` endpoint → verify 200 + commit SHA matches deploy
-7. Run `/smo-drift --post` (confirm clean)
-8. Log deploy to `docs/deploys/YYYY-MM-DD-{tag}.md`
-9. Telegram notify: "✅ {project} v{tag} deployed to {target}"
+7. **L3 gstack:canary** — post-deploy regression watch (60-300s window):
+   - Console errors via browse daemon
+   - Performance regressions vs last deploy baseline
+   - Page failures on top-3 routes
+   - Compares against baseline in `docs/canary/baseline.json`
+   - If any tracked metric regresses or any page errors → trigger /smo-rollback --auto + SEV2 alert
+8. Run `/smo-drift --post` (confirm clean)
+9. Log deploy to `docs/deploys/YYYY-MM-DD-{tag}.md` (includes canary delta)
+10. Telegram notify: "✅ {project} v{tag} deployed to {target} — canary clean"
 
 ## Failure handling
 
 - Step 4 fails (build/pm2) → immediate rollback via `/smo-rollback --auto`
 - Step 6 fails (health check) → `/smo-rollback --auto` + Telegram SEV2 alert
-- Step 7 fails (drift detected) → `/smo-rollback --auto` + SEV1 alert (something changed server-side mid-deploy)
+- Step 7 fails (canary regression) → `/smo-rollback --auto` + SEV2 alert with canary report attached
+- Step 8 fails (drift detected) → `/smo-rollback --auto` + SEV1 alert (something changed server-side mid-deploy)
 
 ## Arguments
 

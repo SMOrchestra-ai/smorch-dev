@@ -14,15 +14,20 @@ description: In-session cheat-sheet. Answers "what command do I run now", "what 
    - **empty** → print overview + table of topics
    - **`start`** → `/smorch-dev-start` 4-layer bootstrap explainer (machine · context · project · input-quality)
    - **`next`** → context-aware recommendation (reads `~/.claude/.last-dev-start` + latest `docs/qa-scores/` + `docs/handovers/` + `docs/qa/` + `.smorch/project.json` + branch/PR state — outputs the next command to run. If dev-start not run or >8h old, recommends `/smorch-dev-start` first.)
-   - **`chain`** → daily chain visualization with wall-clock targets
+   - **`chain`** → daily chain visualization with wall-clock targets (15-command sequence per SOP-36)
    - **`score`** → scoring gates (92/8.5) + what to do at each level
    - **`handover`** → SOP-13 5-dim rubric + how Lana scores
-   - **`qa`** → /smo-qa-run steps + MENA / rollback-drill gates
-   - **`ship`** → ship vs deploy verb boundary (SOP-14)
+   - **`qa`** → /smo-qa-run steps + MENA / rollback-drill gates + gstack:qa wiring
+   - **`ship`** → ship vs deploy verb boundary (SOP-14) + gstack:ship + finishing-a-development-branch
+   - **`worktree`** → `/smo-worktree` (NEW) usage + when required
+   - **`benchmark`** → `/smo-benchmark` (NEW) baseline + 10% regression rule
+   - **`review-pr`** → `/smo-review-pr` (NEW) external code review distinct from /smo-score
+   - **`l3`** → L3 cascade map (SOP-36): which L1 command invokes which gstack/superpowers skill
    - **`locale`** → .smorch/project.json schema for `locale` field
    - **`rollback`** → rollback drill policy + how to flip to optional
-   - **`sops`** → SOP index (SOP-01…SOP-18)
+   - **`sops`** → SOP index (SOP-01…SOP-37)
    - **`lessons`** → lessons.md pointer (global + project)
+   - **`parity`** → server-side parity status (smo-dev / eo-dev), per SOP-37
    - **`stuck`** → troubleshooting decision tree
    - **`{command}`** (e.g., `ship`, `handover`) → that command's usage + gates
 3. Router prints the section, no more, no less
@@ -43,6 +48,9 @@ description: In-session cheat-sheet. Answers "what command do I run now", "what 
 /smo-dev-guide stuck               # decision tree for common blockers
 /smo-dev-guide sop-13              # SOP-13 summary + file pointer
 /smo-dev-guide l-009               # L-009 push discipline
+/smo-dev-guide l3                  # L3 cascade map: gstack + superpowers wiring
+/smo-dev-guide worktree            # /smo-worktree usage
+/smo-dev-guide parity              # server-side parity status
 ```
 
 ## Non-goals
