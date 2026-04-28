@@ -92,7 +92,7 @@ If missing:
 ```bash
 npm i -g @anthropic-ai/claude-code
 ```
-(Set `ANTHROPIC_API_KEY` in `/root/.bashrc` if not already — server-specific key per SOP-16, do NOT push from local.)
+Auth: use `claude login` with your Pro/Max subscription (device-code flow). NOT `ANTHROPIC_API_KEY` — that bills per-token. Subscription auth is what the laptop uses too.
 
 ### 2.3 Install gstack
 ```bash
@@ -110,12 +110,13 @@ rsync -a --delete plugins/smorch-ops/ ~/.claude/plugins/cache/smorch-dev/smorch-
 
 Then edit `~/.claude/plugins/installed_plugins.json` to bump version+installPath for `smorch-dev@smorch-dev` and `smorch-ops@smorch-dev`. (Or, easier: launch `claude` and run `/plugin update smorch-dev@smorch-dev` etc.)
 
-### 2.5 Install superpowers (interactive — required step, no automation)
+### 2.5 Install superpowers (clone, no interactive prompt)
 ```bash
-claude
-# Inside the Claude session:
-/plugin install superpowers@claude-plugins-official
+# Both dev servers already had this from earlier setup. To install fresh:
+git clone --single-branch --depth 1 https://github.com/obra/superpowers.git ~/.claude/skills/_superpowers-repo
+ln -sfn ~/.claude/skills/_superpowers-repo/skills ~/.claude/skills/superpowers
 ```
+The l3-health-check.sh accepts the symlink at `~/.claude/skills/superpowers` pointing to the skills dir.
 
 ### 2.6 Set strict L3 mode
 ```bash
