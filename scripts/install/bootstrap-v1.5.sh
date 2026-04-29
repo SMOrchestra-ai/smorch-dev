@@ -39,9 +39,21 @@ fail() { echo ""; echo "✗ $*" >&2; exit 1; }
 
 # ─── Pre-checks ───────────────────────────────────────────────
 command -v git    >/dev/null 2>&1 || fail "git is required but not installed"
-command -v rsync  >/dev/null 2>&1 || fail "rsync is required but not installed (Git Bash on Windows: install via 'pacman -S rsync' or use WSL)"
 command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1 || fail "python3 (or python) is required but not installed"
 PYTHON=$(command -v python3 || command -v python)
+
+# Portable mirror-copy: rsync if available, else rm + cp -R (works on stock Git Bash).
+mirror_copy() {
+  local src="$1"
+  local dst="$2"
+  if command -v rsync >/dev/null 2>&1; then
+    rsync -a --delete "$src/" "$dst/"
+  else
+    rm -rf "$dst"
+    mkdir -p "$dst"
+    cp -R "$src/." "$dst/"
+  fi
+}
 
 mkdir -p "$PLUGINS_DIR" "$SKILLS_DIR" "$MARKETS_DIR" "$CACHE_DIR"
 
@@ -86,9 +98,9 @@ EO_SHA=$( cd "$MARKETS_DIR/eo-microsaas-training" && git rev-parse HEAD )
 # ─── 4. Refresh plugin cache ──────────────────────────────────
 step "Step 4: refresh plugin cache"
 mkdir -p "$CACHE_DIR/smorch-dev/smorch-dev/1.5.0" "$CACHE_DIR/smorch-dev/smorch-ops/1.1.0" "$CACHE_DIR/eo-microsaas-training/eo-microsaas-dev/1.4.5"
-rsync -a --delete "$MARKETS_DIR/smorch-dev/plugins/smorch-dev/" "$CACHE_DIR/smorch-dev/smorch-dev/1.5.0/"
-rsync -a --delete "$MARKETS_DIR/smorch-dev/plugins/smorch-ops/" "$CACHE_DIR/smorch-dev/smorch-ops/1.1.0/"
-rsync -a --delete "$MARKETS_DIR/eo-microsaas-training/eo-microsaas-dev/" "$CACHE_DIR/eo-microsaas-training/eo-microsaas-dev/1.4.5/"
+mirror_copy "$MARKETS_DIR/smorch-dev/plugins/smorch-dev"  "$CACHE_DIR/smorch-dev/smorch-dev/1.5.0"
+mirror_copy "$MARKETS_DIR/smorch-dev/plugins/smorch-ops"  "$CACHE_DIR/smorch-dev/smorch-ops/1.1.0"
+mirror_copy "$MARKETS_DIR/eo-microsaas-training/eo-microsaas-dev"  "$CACHE_DIR/eo-microsaas-training/eo-microsaas-dev/1.4.5"
 chmod +x "$CACHE_DIR/smorch-dev/smorch-dev/1.5.0/scripts/"*.sh 2>/dev/null || true
 ok "smorch-dev v1.5.0: $(ls "$CACHE_DIR/smorch-dev/smorch-dev/1.5.0/commands/" 2>/dev/null | wc -l | tr -d ' ') commands"
 ok "smorch-ops v1.1.0: $(ls "$CACHE_DIR/smorch-dev/smorch-ops/1.1.0/commands/" 2>/dev/null | wc -l | tr -d ' ') commands"
