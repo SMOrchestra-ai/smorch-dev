@@ -10,6 +10,19 @@
 
 Paste this in PowerShell or Git Bash. Lana doesn't need to know what it does — Claude Code on her machine will pick up everything on next session restart.
 
+### 1.0 — Pre-flight: rename any legacy direct installs (REQUIRED, captured 2026-04-29 from Lana's blocker)
+
+Why: a plugin directory at `~/.claude/plugins/smorch-dev/` (or `smorch-ops/`) takes precedence over the marketplace cache at `~/.claude/plugins/cache/smorch-dev/smorch-dev/1.5.0/`. Pre-marketplace direct installs shadow the new commands. Filesystem presence ≠ runtime loading. See L-011.
+
+```bash
+# Rename legacy direct installs (idempotent — safe if dirs don't exist)
+[ -d ~/.claude/plugins/smorch-dev ] && mv ~/.claude/plugins/smorch-dev ~/.claude/plugins/_legacy-smorch-dev-direct-pre-v1.5
+[ -d ~/.claude/plugins/smorch-ops ] && mv ~/.claude/plugins/smorch-ops ~/.claude/plugins/_legacy-smorch-ops-direct-pre-v1.5
+ls ~/.claude/plugins/ | grep -E '^(_legacy-|cache$|marketplaces$)'
+```
+
+If your legacy install had different commands (e.g., `/build-mcp`, `/n8n-architect`), those are NOT smorch-dev commands — they're from `smorch-builders` (a different smorch-brain plugin) that someone wedged into the wrong namespace. They are NOT superseded by v1.5.0. If you still want them, install `smorch-builders` properly via the smorch-brain marketplace.
+
 ### 1.1 Pull latest marketplaces
 
 ```bash

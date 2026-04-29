@@ -9,19 +9,30 @@
 
 The two SMO dev VPS — **smo-dev** (62.171.165.57) and **eo-dev** (84.247.172.113, renamed from smo-eo-qa as of 2026-04-29) — run the SAME Claude Code stack as the dev laptops. No "works on my machine" gaps.
 
-## The 5-row parity checklist
+## The 6-row parity checklist (v1.5+)
 
 Per server, per quarter (or after any rebuild):
 
 | # | Item | Verify command |
 |---|------|----------------|
 | 1 | Claude Code installed | `claude --version` returns ≥ current local version |
-| 2 | gstack at `~/.claude/skills/gstack/` | `bash ~/.claude/plugins/cache/smorch-dev/scripts/l3-health-check.sh --strict --quiet` returns 0 |
-| 3 | superpowers plugin installed (via `/plugin install`) | same script as #2 (covers both gstack + superpowers) |
-| 4 | smorch-dev + smorch-ops plugins synced | `cat ~/.claude/plugins/cache/smorch-dev/.claude-plugin/plugin.json \| jq -r .version` matches local |
+| 2 | gstack at `~/.claude/skills/gstack/` | `bash ~/.claude/plugins/cache/smorch-dev/smorch-dev/1.5.0/scripts/l3-health-check.sh --strict --quiet` returns 0 |
+| 3 | superpowers plugin installed | same script as #2 (covers both gstack + superpowers) |
+| 4 | smorch-dev + smorch-ops plugins synced | `cat ~/.claude/plugins/cache/smorch-dev/smorch-dev/1.5.0/.claude-plugin/plugin.json \| jq -r .version` matches local |
 | 5 | `~/.claude/CLAUDE.md` synced from canonical | `sha256sum ~/.claude/CLAUDE.md` matches canonical |
+| 6 | **No shadow direct-install** (added 2026-04-29 per L-011) | `ls ~/.claude/plugins/smorch-dev ~/.claude/plugins/smorch-ops 2>/dev/null` returns empty; same script as #2 detects via `shadow(N)` in status line |
 
 Any failure → `/smo-skill-sync --server <name> --bootstrap` (full re-bootstrap) OR `--server <name>` (skill-only sync, faster).
+
+### Why row 6 (shadow detection)
+
+A pre-marketplace direct install at `~/.claude/plugins/{plugin-name}/` takes precedence over the marketplace cache at `~/.claude/plugins/cache/{marketplace}/{plugin-name}/{version}/`. New commands ship via the cache; the shadow blocks them silently. L3 health-check v1.5.1+ flags the shadow in warn mode and refuses session in strict mode (per L-011).
+
+Remediation:
+```bash
+[ -d ~/.claude/plugins/smorch-dev ] && mv ~/.claude/plugins/smorch-dev ~/.claude/plugins/_legacy-smorch-dev-direct-pre-v1.5
+[ -d ~/.claude/plugins/smorch-ops ] && mv ~/.claude/plugins/smorch-ops ~/.claude/plugins/_legacy-smorch-ops-direct-pre-v1.5
+```
 
 ## Rename: smo-eo-qa → eo-dev (2026-04-29)
 

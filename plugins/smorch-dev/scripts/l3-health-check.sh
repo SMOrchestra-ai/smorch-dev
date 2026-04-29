@@ -59,6 +59,18 @@ SUPERPOWERS_LOCAL="${SUPERPOWERS_LOCAL:-$HOME/.claude/skills/superpowers}"
 
 missing_gstack=()
 missing_superpowers=()
+shadow_warnings=()
+
+# Shadow-install detection (L-011, captured 2026-04-29 from Lana's blocker).
+# A plugin directory at ~/.claude/plugins/smorch-{dev,ops}/ takes precedence
+# over the marketplace cache. If the legacy direct install isn't renamed,
+# new commands from v1.5.0+ never load. Filesystem presence ≠ runtime loading.
+PLUGINS_DIR="${PLUGINS_DIR:-$HOME/.claude/plugins}"
+for legacy in smorch-dev smorch-ops; do
+  if [ -d "$PLUGINS_DIR/$legacy" ] && [ -d "$PLUGINS_DIR/$legacy/.claude-plugin" ]; then
+    shadow_warnings+=("$PLUGINS_DIR/$legacy")
+  fi
+done
 
 # gstack: each skill is a subdirectory of $GSTACK_ROOT
 for skill in "${GSTACK_SKILLS[@]}"; do
@@ -94,17 +106,33 @@ fi
 gstack_ok=$(( ${#GSTACK_SKILLS[@]} - ${#missing_gstack[@]} ))
 sp_ok=$(( ${#SUPERPOWERS_SKILLS[@]} - ${#missing_superpowers[@]} ))
 
-if [ ${#missing_gstack[@]} -eq 0 ] && [ ${#missing_superpowers[@]} -eq 0 ]; then
+all_clean=1
+if [ ${#missing_gstack[@]} -gt 0 ] || [ ${#missing_superpowers[@]} -gt 0 ]; then
+  all_clean=0
+fi
+if [ ${#shadow_warnings[@]} -gt 0 ]; then
+  all_clean=0
+fi
+
+if [ "$all_clean" = "1" ]; then
   echo "L3 ✓ gstack(${gstack_ok}/${#GSTACK_SKILLS[@]}) superpowers(${sp_ok}/${#SUPERPOWERS_SKILLS[@]})"
   exit 0
 fi
 
 # Failure path. Mode-aware: warn (default) vs strict (servers/CI).
+status_glyph="⚠"
+status_tag="warn — session continues"
 if [ "$STRICT" = "1" ]; then
-  echo "L3 ✗ gstack(${gstack_ok}/${#GSTACK_SKILLS[@]}) superpowers(${sp_ok}/${#SUPERPOWERS_SKILLS[@]}) [STRICT — refusing session]"
-else
-  echo "L3 ⚠ gstack(${gstack_ok}/${#GSTACK_SKILLS[@]}) superpowers(${sp_ok}/${#SUPERPOWERS_SKILLS[@]}) [warn — session continues; install missing for full cascade]"
+  status_glyph="✗"
+  status_tag="STRICT — refusing session"
 fi
+
+# Status line includes shadow count if any
+shadow_note=""
+if [ ${#shadow_warnings[@]} -gt 0 ]; then
+  shadow_note=" shadow($(echo ${#shadow_warnings[@]}))"
+fi
+echo "L3 $status_glyph gstack(${gstack_ok}/${#GSTACK_SKILLS[@]}) superpowers(${sp_ok}/${#SUPERPOWERS_SKILLS[@]})${shadow_note} [$status_tag]"
 
 if [ -n "$QUIET" ]; then
   [ "$STRICT" = "1" ] && exit 1 || exit 0
@@ -118,6 +146,20 @@ else
 fi
 echo ""
 
+if [ ${#shadow_warnings[@]} -gt 0 ]; then
+  echo "Shadow direct-install detected (L-011): legacy plugin dir takes precedence over marketplace cache."
+  for path in "${shadow_warnings[@]}"; do
+    echo "  → $path"
+  done
+  echo "Remediation: rename to legacy-prefix so the marketplace cache wins:"
+  for path in "${shadow_warnings[@]}"; do
+    base=$(basename "$path")
+    echo "  mv \"$path\" \"${PLUGINS_DIR}/_legacy-${base}-direct-pre-v1.5\""
+  done
+  echo "Then restart Claude Code. Marketplace cache (cache/smorch-dev/...) loads correctly."
+  echo ""
+fi
+
 if [ ${#missing_gstack[@]} -gt 0 ]; then
   echo "Missing gstack skills: ${missing_gstack[*]}"
   echo "Remediation:"
@@ -128,8 +170,11 @@ fi
 
 if [ ${#missing_superpowers[@]} -gt 0 ]; then
   echo "Missing superpowers skills: ${missing_superpowers[*]}"
-  echo "Remediation (run inside Claude Code):"
+  echo "Remediation (laptop with /plugin support):"
   echo "  /plugin install superpowers@claude-plugins-official"
+  echo "Remediation (server / no /plugin support):"
+  echo "  git clone --single-branch --depth 1 https://github.com/obra/superpowers.git ~/.claude/skills/_superpowers-repo"
+  echo "  ln -sfn ~/.claude/skills/_superpowers-repo/skills ~/.claude/skills/superpowers"
   echo ""
 fi
 

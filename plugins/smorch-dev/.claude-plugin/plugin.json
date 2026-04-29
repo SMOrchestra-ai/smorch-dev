@@ -1,6 +1,6 @@
 {
   "name": "smorch-dev",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "SMOrchestra internal development workflow plugin. v1.5 — L3 cascade revision (SOP-36): 15 slash commands wired to gstack (29 skills) + superpowers (14 skills) + 11 frozen L2 skills (5-hat scoring, MENA + RTL, BRD traceability, elegance pause, lessons, handover, cost). 12 existing commands (smorch-dev-start, plan, code, score, bridge-gaps, handover, qa-handover-score, qa-run, ship, triage, retro, dev-guide) revised to invoke L3 hard-required (warn-default on laptops, strict-refuse on servers/CI). 3 new commands (worktree, benchmark, review-pr) wrap superpowers:using-git-worktrees, gstack:benchmark, superpowers:requesting-code-review. SessionStart hook runs l3-health-check.sh. Pre-commit guard (check-no-l2-reimplementation.sh) prevents L2 from drifting into L3 territory. Anti-bloat: L2 list is FROZEN at 11.",
   "author": {
     "name": "SMOrchestra.ai",
