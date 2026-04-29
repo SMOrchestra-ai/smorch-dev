@@ -14,7 +14,7 @@ allowed-tools: Bash, Read
 |------|----------|------|
 | Reviewer dispatch | `superpowers:requesting-code-review` | Always |
 | Pre-landing check | `gstack:review` | If `--deep` flag (SQL safety, LLM trust, side effects) |
-| Security focus | `gstack:security-review` (built-in Claude command) | If `--security` flag or PR touches auth/secrets |
+| Security focus | `/security-review` (built-in Claude command, not a gstack skill) | If `--security` flag or PR touches auth/secrets |
 | Author response | `superpowers:receiving-code-review` | If reviewer returned non-trivial feedback |
 
 L2: `brd-traceability` re-validates AC coverage if reviewer suggested changes that touched test files.
@@ -33,7 +33,7 @@ L2: `brd-traceability` re-validates AC coverage if reviewer suggested changes th
    - NOT session history. Reviewer is fresh — never sees coordinator chatter.
 3. Reviewer returns structured feedback with severity (critical / blocker / suggestion / nit)
 4. **If `--deep` flag**: also run **L3 gstack:review** for pre-landing checks (SQL safety, LLM trust boundaries, conditional side effects)
-5. **If `--security` flag** OR PR touches `auth/`, `secrets/`, `*.env*`, or RLS policies: also run **L3 gstack:security-review**
+5. **If `--security` flag** OR PR touches `auth/`, `secrets/`, `*.env*`, or RLS policies: also run **L3 /security-review**
 6. Aggregate all reviewer outputs into a single decision:
    - **Critical/Blocker**: block /smo-ship until addressed
    - **Suggestion**: surface to author, non-blocking
@@ -47,7 +47,7 @@ L2: `brd-traceability` re-validates AC coverage if reviewer suggested changes th
 
 - `$ARGUMENTS` — PR number or branch name (default: current branch)
 - `--deep` — also run gstack:review (pre-landing pass)
-- `--security` — also run gstack:security-review
+- `--security` — also run /security-review
 - `--auto-address` — author automatically applies non-controversial suggestions (still requires manual review of blockers)
 
 ## Output
