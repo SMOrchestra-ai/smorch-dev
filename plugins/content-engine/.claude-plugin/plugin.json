@@ -1,0 +1,58 @@
+{
+  "name": "content-engine",
+  "version": "2.0.0",
+  "description": "SMOrchestra content production engine for Mamoun Alamouri. Bilingual LinkedIn post writer (English + Jordanian Arabic) with foundation skills for brand voice and 8-dimension quality rubric. Min 9.0/10 to ship. Pushes drafts to GHL — never publishes directly.",
+  "author": {
+    "name": "SMOrchestra.ai",
+    "email": "smorchestra.ai@gmail.com"
+  },
+  "homepage": "https://github.com/SMOrchestra-ai/smorch-dev",
+  "repository": "https://github.com/SMOrchestra-ai/smorch-dev",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "smorchestra",
+    "content-engine",
+    "linkedin",
+    "bilingual",
+    "arabic",
+    "mena",
+    "ghl",
+    "quality-rubric",
+    "mamoun-alamouri"
+  ],
+  "skills": {
+    "auto": true,
+    "root": "./skills",
+    "load_order": [
+      "brand-voice-smorchestra",
+      "content-quality-rubric",
+      "linkedin-post-en",
+      "linkedin-post-ar-jordan"
+    ]
+  },
+  "foundation_skills": [
+    "brand-voice-smorchestra",
+    "content-quality-rubric"
+  ],
+  "assets": {
+    "root": "./assets",
+    "files": {
+      "logo": "mamoun-logo.png",
+      "last_slide_en": "last-slide-english.png",
+      "last_slide_ar": "last-slide-arabic.png"
+    }
+  },
+  "rules": {
+    "min_quality_score": 9.0,
+    "ghl_location_id": "7IYdMpQvOejcQmZdDjAQ",
+    "ghl_profile": "Mamoun Alamouri personal LinkedIn — NOT SMOrchestra",
+    "ghl_status": "draft",
+    "never_publish_directly": true,
+    "no_hashtags": true,
+    "no_em_dashes": true,
+    "logo_position": "top-left",
+    "carousel_last_slide_en": "assets/last-slide-english.png",
+    "carousel_last_slide_ar": "assets/last-slide-arabic.png"
+  }
+}
